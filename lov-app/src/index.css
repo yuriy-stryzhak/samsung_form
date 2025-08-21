@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern Design System inspired by Samsung with dark accents */
+
+@layer base {
+  :root {
+    /* Modern grayscale palette */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 8%;
+    --surface: 0 0% 100%;
+    --surface-dim: 0 0% 96%;
+    
+    /* Card system */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
+    
+    /* Popover system */
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+    
+    /* Samsung-inspired blue accent */
+    --primary: 220 91% 56%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 220 91% 50%;
+    --primary-glow: 220 91% 56%;
+    
+    /* Dark accent system */
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-hover: 0 0% 18%;
+    
+    /* Muted system */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
+    
+    /* Accent system */
+    --accent: 0 0% 94%;
+    --accent-foreground: 0 0% 12%;
+    
+    /* Status colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    
+    /* Border system */
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --ring: 220 91% 56%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 91% 56%), hsl(220 91% 70%));
+    --gradient-dark: linear-gradient(135deg, hsl(0 0% 8%), hsl(0 0% 18%));
+    --gradient-surface: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+    --shadow-glow: 0 0 20px hsl(220 91% 56% / 0.3);
+    
+    /* Radius */
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 96%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark mode colors */
+    --background: 0 0% 5%;
+    --foreground: 0 0% 98%;
+    --surface: 0 0% 8%;
+    --surface-dim: 0 0% 4%;
+    
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+    
+    --primary: 220 91% 56%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 220 91% 50%;
+    --primary-glow: 220 91% 56%;
+    
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-hover: 0 0% 18%;
+    
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 60%;
+    
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 98%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 220 91% 56%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-inter antialiased;
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Modern button variants */
+  .btn-hero {
+    @apply inline-flex items-center justify-center rounded-xl px-8 py-4 text-base font-medium transition-all duration-300;
+    @apply bg-primary text-primary-foreground hover:shadow-glow;
+    background: var(--gradient-primary);
+  }
+  
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-xl px-8 py-4 text-base font-medium transition-all duration-300;
+    @apply bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground;
+  }
+  
+  .btn-dark {
+    @apply inline-flex items-center justify-center rounded-xl px-8 py-4 text-base font-medium transition-all duration-300;
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary-hover;
+  }
+  
+  /* Modern form controls */
+  .form-input {
+    @apply w-full px-4 py-3 rounded-xl border border-border bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200;
+  }
+  
+  .form-select {
+    @apply w-full px-4 py-3 rounded-xl border border-border bg-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 appearance-none;
+  }
+  
+  /* Modern cards */
+  .card-modern {
+    @apply bg-card border border-border rounded-2xl p-6 transition-all duration-300 hover:shadow-lg;
+    background: var(--gradient-surface);
+  }
+  
+  .card-dark {
+    @apply bg-secondary text-secondary-foreground rounded-2xl p-6 transition-all duration-300 hover:shadow-lg;
+    background: var(--gradient-dark);
+  }
+  
+  /* Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+  
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-all duration-300 hover:shadow-lg;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-glow;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Responsive design helpers */
+@media (max-width: 768px) {
+  .mobile-padding {
+    @apply px-4;
+  }
+  
+  .mobile-text-sm {
+    @apply text-sm;
+  }
+}
