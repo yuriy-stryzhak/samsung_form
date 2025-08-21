@@ -71,7 +71,7 @@
               :required="field.required"
               class="form-select h-[50px]"
             >
-              <option value="">Select an option</option>
+                             <option value="">Оберіть опцію</option>
               <option 
                 v-for="option in field.options" 
                 :key="option" 
@@ -139,14 +139,14 @@
           :disabled="loading"
           class="w-full btn-hero disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <span v-if="loading" class="flex items-center justify-center">
-            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Submitting...
-          </span>
-          <span v-else>Submit Form</span>
+                                  <span v-if="loading" class="flex items-center justify-center">
+                          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Відправлення...
+                        </span>
+                        <span v-else>Відправити форму</span>
         </button>
       </div>
     </form>
@@ -162,16 +162,16 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
           </svg>
         </div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-2">Thank You!</h3>
-        <p class="text-gray-600 mb-6">
-          Your form has been submitted successfully. We'll get back to you soon.
-        </p>
-        <button 
-          @click="showSuccess = false"
-          class="btn-hero"
-        >
-          Close
-        </button>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Дякуємо!</h3>
+                    <p class="text-gray-600 mb-6">
+                      Ваша форма успішно відправлена. Ми зв'яжемося з вами найближчим часом.
+                    </p>
+                    <button 
+                      @click="showSuccess = false"
+                      class="btn-hero"
+                    >
+                      Закрити
+                    </button>
       </div>
     </div>
   </div>
@@ -241,11 +241,11 @@ const handleSubmit = async () => {
       })
       selectedFile.value = null
     } else {
-      alert('Error submitting form: ' + result.error)
+      alert('Помилка відправлення форми: ' + result.error)
     }
   } catch (error) {
     console.error('Form submission error:', error)
-    alert('An error occurred while submitting the form.')
+    alert('Сталася помилка під час відправлення форми.')
   } finally {
     loading.value = false
   }

@@ -3,9 +3,9 @@
     <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
       <div class="p-6 border-b border-gray-200">
         <div class="flex justify-between items-center">
-          <h2 class="text-2xl font-bold text-gray-900">
-            {{ editingForm ? 'Edit Form' : 'Create New Form' }}
-          </h2>
+                                <h2 class="text-2xl font-bold text-gray-900">
+                        {{ editingForm ? 'Редагувати форму' : 'Створити нову форму' }}
+                      </h2>
           <button 
             @click="$emit('close')"
             class="text-gray-400 hover:text-gray-600 transition-colors duration-200"
@@ -18,33 +18,33 @@
       </div>
 
       <form @submit.prevent="handleSave" class="p-6 space-y-6">
-        <!-- Form Name -->
-        <div>
-          <label for="formName" class="block text-sm font-medium text-gray-700 mb-2">
-            Form Name
-          </label>
-          <input
-            id="formName"
-            v-model="formData.name"
-            type="text"
-            required
-                                    class="admin-input"
-            placeholder="Enter form name"
-          />
-        </div>
+                            <!-- Form Name -->
+                    <div>
+                      <label for="formName" class="block text-sm font-medium text-gray-700 mb-2">
+                        Назва форми
+                      </label>
+                      <input
+                        id="formName"
+                        v-model="formData.name"
+                        type="text"
+                        required
+                        class="admin-input"
+                        placeholder="Введіть назву форми"
+                      />
+                    </div>
 
         <!-- Fields Section -->
         <div>
-          <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-medium text-gray-900">Form Fields</h3>
-            <button 
-              type="button"
-              @click="addField"
-              class="btn-ghost"
-            >
-              Add Field
-            </button>
-          </div>
+                                <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">Поля форми</h3>
+                        <button 
+                          type="button"
+                          @click="addField"
+                          class="btn-ghost"
+                        >
+                          Додати поле
+                        </button>
+                      </div>
 
           <div class="space-y-4">
             <div 
@@ -53,73 +53,73 @@
               class="border border-gray-200 rounded-lg p-4 bg-gray-50"
             >
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <!-- Field Type -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Field Type</label>
-                                                <select 
+                                            <!-- Field Type -->
+                            <div>
+                              <label class="block text-sm font-medium text-gray-700 mb-2">Тип поля</label>
+                              <select 
                                 v-model="field.type"
                                 class="admin-select"
                                 @change="handleFieldTypeChange(field)"
                               >
-                    <option value="text">Text</option>
-                    <option value="email">Email</option>
-                    <option value="phone">Phone</option>
-                    <option value="select">Select</option>
-                    <option value="checkbox">Checkbox</option>
-                    <option value="file">File Upload</option>
-                    <option value="textarea">Textarea</option>
-                  </select>
-                </div>
+                                <option value="text">Текст</option>
+                                <option value="email">Email</option>
+                                <option value="phone">Телефон</option>
+                                <option value="select">Випадаючий список</option>
+                                <option value="checkbox">Прапорець</option>
+                                <option value="file">Завантаження файлу</option>
+                                <option value="textarea">Текстове поле</option>
+                              </select>
+                            </div>
 
-                <!-- Field Label -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">Label</label>
-                  <input
-                    v-model="field.label"
-                    type="text"
-                    required
-                                            class="admin-input"
-                    placeholder="Field label"
-                  />
-                </div>
+                            <!-- Field Label -->
+                            <div>
+                              <label class="block text-sm font-medium text-gray-700 mb-2">Мітка</label>
+                              <input
+                                v-model="field.label"
+                                type="text"
+                                required
+                                class="admin-input"
+                                placeholder="Мітка поля"
+                              />
+                            </div>
               </div>
 
-              <!-- Field Options (for select fields) -->
-              <div v-if="field.type === 'select'" class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Options (comma-separated)
-                </label>
-                <textarea
-                  v-model="field.optionsText"
-                  rows="3"
-                  class="admin-textarea"
-                  placeholder="Option 1, Option 2, Option 3"
-                  @input="updateSelectOptions(field)"
-                ></textarea>
-              </div>
+                                        <!-- Field Options (for select fields) -->
+                          <div v-if="field.type === 'select'" class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                              Опції (через кому)
+                            </label>
+                            <textarea
+                              v-model="field.optionsText"
+                              rows="3"
+                              class="admin-textarea"
+                              placeholder="Опція 1, Опція 2, Опція 3"
+                              @input="updateSelectOptions(field)"
+                            ></textarea>
+                          </div>
 
-              <!-- Field Placeholder -->
-              <div v-if="field.type !== 'checkbox' && field.type !== 'file'" class="mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Placeholder</label>
-                <input
-                  v-model="field.placeholder"
-                  type="text"
-                                          class="admin-input"
-                  placeholder="Field placeholder"
-                />
-              </div>
+                          <!-- Field Placeholder -->
+                          <div v-if="field.type !== 'checkbox' && field.type !== 'file'" class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Плейсхолдер</label>
+                            <input
+                              v-model="field.placeholder"
+                              type="text"
+                              class="admin-input"
+                              placeholder="Плейсхолдер поля"
+                            />
+                          </div>
 
               <!-- Field Settings -->
               <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                  <label class="flex items-center">
-                    <input
-                      v-model="field.required"
-                      type="checkbox"
-                      class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-                    />
-                    <span class="ml-2 text-sm text-gray-700">Required</span>
-                  </label>
+                                                <label class="flex items-center">
+                                <input
+                                  v-model="field.required"
+                                  type="checkbox"
+                                  class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                                />
+                                <span class="ml-2 text-sm text-gray-700">Обов'язкове</span>
+                              </label>
                 </div>
 
                 <div class="flex items-center space-x-2">
@@ -157,40 +157,40 @@
             </div>
           </div>
 
-          <!-- No Fields Message -->
-          <div v-if="formData.fields.length === 0" class="text-center py-8 text-gray-500">
-            <p>No fields added yet. Click "Add Field" to get started.</p>
-          </div>
+                                <!-- No Fields Message -->
+                      <div v-if="formData.fields.length === 0" class="text-center py-8 text-gray-500">
+                        <p>Поки що не додано жодного поля. Натисніть "Додати поле" щоб почати.</p>
+                      </div>
         </div>
 
-        <!-- Form Activation -->
-        <div class="flex items-center">
-          <input
-            id="isActive"
-            v-model="formData.is_active"
-            type="checkbox"
-            class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-          />
-          <label for="isActive" class="ml-2 text-sm text-gray-700">
-            Make this form active (only one form can be active at a time)
-          </label>
-        </div>
+                            <!-- Form Activation -->
+                    <div class="flex items-center">
+                      <input
+                        id="isActive"
+                        v-model="formData.is_active"
+                        type="checkbox"
+                        class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                      />
+                      <label for="isActive" class="ml-2 text-sm text-gray-700">
+                        Зробити цю форму активною (тільки одна форма може бути активною одночасно)
+                      </label>
+                    </div>
 
         <!-- Action Buttons -->
         <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
-          <button 
-            type="button"
-            @click="$emit('close')"
-            class="btn-ghost"
-          >
-            Cancel
-          </button>
-          <button 
-            type="submit"
-            class="btn-hero"
-          >
-            {{ editingForm ? 'Update Form' : 'Create Form' }}
-          </button>
+                                <button 
+                        type="button"
+                        @click="$emit('close')"
+                        class="btn-ghost"
+                      >
+                        Скасувати
+                      </button>
+                      <button 
+                        type="submit"
+                        class="btn-hero"
+                      >
+                        {{ editingForm ? 'Оновити форму' : 'Створити форму' }}
+                      </button>
         </div>
       </form>
     </div>
@@ -297,19 +297,19 @@ const updateSelectOptions = (field: FormField & { optionsText?: string }) => {
 const handleSave = () => {
   // Validate form
   if (!formData.value.name.trim()) {
-    alert('Please enter a form name')
+    alert('Будь ласка, введіть назву форми')
     return
   }
 
   if (formData.value.fields.length === 0) {
-    alert('Please add at least one field')
+    alert('Будь ласка, додайте хоча б одне поле')
     return
   }
 
   // Validate fields
   for (const field of formData.value.fields) {
     if (!field.label.trim()) {
-      alert('Please enter labels for all fields')
+      alert('Будь ласка, введіть мітки для всіх полів')
       return
     }
   }

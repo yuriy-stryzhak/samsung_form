@@ -10,22 +10,22 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex justify-between items-center h-16">
             <div class="flex items-center">
-              <h1 class="text-2xl font-bold text-primary-600">Admin Dashboard</h1>
+                                      <h1 class="text-2xl font-bold text-primary-600">Панель Адміністратора</h1>
             </div>
             <div class="flex items-center space-x-4">
               <span class="text-gray-600">{{ authStore.user?.email }}</span>
-              <button 
-                @click="authStore.logout()"
-                class="btn-ghost"
-              >
-                Logout
-              </button>
-              <router-link 
-                to="/" 
-                class="text-gray-600 hover:text-primary-600 transition-colors duration-200"
-              >
-                View Site
-              </router-link>
+                                        <button 
+                            @click="authStore.logout()"
+                            class="btn-ghost"
+                          >
+                            Вийти
+                          </button>
+                          <router-link 
+                            to="/" 
+                            class="text-gray-600 hover:text-primary-600 transition-colors duration-200"
+                          >
+                            Переглянути сайт
+                          </router-link>
             </div>
           </div>
         </div>
@@ -56,15 +56,15 @@
       <div class="animate-fade-in">
         <!-- Form Builder Tab -->
         <div v-if="activeTab === 'forms'" class="space-y-6">
-          <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-bold text-gray-900">Form Builder</h2>
-            <button 
-              @click="showCreateForm = true"
-              class="btn-hero"
-            >
-              Create New Form
-            </button>
-          </div>
+                                  <div class="flex justify-between items-center">
+                          <h2 class="text-2xl font-bold text-gray-900">Конструктор Форм</h2>
+                          <button 
+                            @click="showCreateForm = true"
+                            class="btn-hero"
+                          >
+                            Створити нову форму
+                          </button>
+                        </div>
 
                                   <!-- Forms List -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -77,36 +77,36 @@
                 <div class="flex-1">
                   <div class="flex items-center space-x-3 mb-3">
                     <h3 class="text-lg font-semibold text-gray-900">{{ form.name }}</h3>
-                    <span 
-                      v-if="form.is_active"
-                      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
-                    >
-                      Active
-                    </span>
+                                                      <span 
+                                    v-if="form.is_active"
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
+                                  >
+                                    Активна
+                                  </span>
                   </div>
-                  <p class="text-gray-600 mb-4">
-                    {{ form.fields.length }} field(s) • Created {{ formatDate(form.created_at) }}
-                  </p>
+                                                  <p class="text-gray-600 mb-4">
+                                  {{ form.fields.length }} поле(ів) • Створено {{ formatDate(form.created_at) }}
+                                </p>
                   <div class="flex space-x-2">
-                    <button 
-                      @click="editForm(form)"
-                      class="btn-ghost"
-                    >
-                      Edit
-                    </button>
-                    <button 
-                      v-if="!form.is_active"
-                      @click="activateForm(form.id)"
-                      class="btn-ghost"
-                    >
-                      Activate
-                    </button>
-                    <button 
-                      @click="deleteForm(form.id)"
-                      class="text-red-600 hover:text-red-800 transition-colors duration-200"
-                    >
-                      Delete
-                    </button>
+                                                      <button 
+                                    @click="editForm(form)"
+                                    class="btn-ghost"
+                                  >
+                                    Редагувати
+                                  </button>
+                                  <button 
+                                    v-if="!form.is_active"
+                                    @click="activateForm(form.id)"
+                                    class="btn-ghost"
+                                  >
+                                    Активувати
+                                  </button>
+                                  <button 
+                                    @click="deleteForm(form.id)"
+                                    class="text-red-600 hover:text-red-800 transition-colors duration-200"
+                                  >
+                                    Видалити
+                                  </button>
                   </div>
                 </div>
               </div>
@@ -116,15 +116,15 @@
 
         <!-- Submissions Tab -->
         <div v-if="activeTab === 'submissions'" class="space-y-6">
-          <div class="flex justify-between items-center">
-            <h2 class="text-2xl font-bold text-gray-900">Form Submissions</h2>
-            <button 
-              @click="formsStore.fetchSubmissions()"
-              class="btn-ghost"
-            >
-              Refresh
-            </button>
-          </div>
+                                  <div class="flex justify-between items-center">
+                          <h2 class="text-2xl font-bold text-gray-900">Відправлення Форм</h2>
+                          <button 
+                            @click="formsStore.fetchSubmissions()"
+                            class="btn-ghost"
+                          >
+                            Оновити
+                          </button>
+                        </div>
 
           <!-- Submissions Table -->
           <div class="card-modern overflow-hidden">
@@ -132,20 +132,20 @@
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                   <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Form
-                    </th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Data
-                    </th>
                                                       <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    File
+                                    Дата
                                   </th>
                                   <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Actions
+                                    Форма
+                                  </th>
+                                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Дані
+                                  </th>
+                                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Файл
+                                  </th>
+                                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Дії
                                   </th>
                                 </tr>
                               </thead>
@@ -172,15 +172,15 @@
                                       target="_blank"
                                       class="text-primary-600 hover:text-primary-800 underline"
                                     >
-                                      View File
+                                                                             Переглянути файл
                                     </a>
-                                    <span v-else class="text-gray-400">No file</span>
+                                    <span v-else class="text-gray-400">Немає файлу</span>
                                   </td>
                                   <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                     <button 
                                       @click="deleteSubmission(submission.id)"
                                       class="text-red-600 hover:text-red-800 transition-colors duration-200 p-1"
-                                      title="Delete submission"
+                                                                             title="Видалити відправлення"
                                     >
                                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -222,10 +222,10 @@ const activeTab = ref('forms')
 const showCreateForm = ref(false)
 const editingForm = ref<Form | null>(null)
 
-const tabs = [
-  { id: 'forms', name: 'Form Builder' },
-  { id: 'submissions', name: 'Submissions' }
-]
+            const tabs = [
+              { id: 'forms', name: 'Конструктор Форм' },
+              { id: 'submissions', name: 'Відправлення' }
+            ]
 
 // Fetch data on mount
 onMounted(async () => {
@@ -257,7 +257,7 @@ const activateForm = async (id: number) => {
 }
 
 const deleteForm = async (id: number) => {
-  if (confirm('Are you sure you want to delete this form?')) {
+  if (confirm('Ви впевнені, що хочете видалити цю форму?')) {
     await formsStore.deleteForm(id)
   }
 }
@@ -269,15 +269,15 @@ const formatDate = (dateString: string) => {
 
             const getFormName = (formId: number) => {
               const form = formsStore.forms.find(f => f.id === formId)
-              return form ? form.name : 'Unknown Form'
+              return form ? form.name : 'Невідома форма'
             }
 
             const deleteSubmission = async (id: number) => {
-              if (confirm('Are you sure you want to delete this submission?')) {
-                const result = await formsStore.deleteSubmission(id)
-                if (!result.success) {
-                  alert('Error deleting submission: ' + result.error)
-                }
-              }
-            }
+  if (confirm('Ви впевнені, що хочете видалити це відправлення?')) {
+    const result = await formsStore.deleteSubmission(id)
+    if (!result.success) {
+      alert('Помилка видалення відправлення: ' + result.error)
+    }
+  }
+}
 </script>
