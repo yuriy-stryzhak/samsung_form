@@ -87,7 +87,7 @@
                                                   <p class="text-gray-600 mb-4">
                                   {{ form.fields.length }} поле(ів) • Створено {{ formatDate(form.created_at) }}
                                 </p>
-                  <div class="flex space-x-2">
+                  <div class="flex space-x-2 flex-wrap gap-2">
                                                       <button 
                                     @click="editForm(form)"
                                     class="btn-ghost"
@@ -97,7 +97,7 @@
                                   <button 
                                     v-if="!form.is_active"
                                     @click="activateForm(form.id)"
-                                    class="btn-ghost"
+                                    class="bg-transparent text-green-600 border border-green-600 font-medium py-2 px-4 rounded-lg hover:bg-green-50 transition-colors duration-200"
                                   >
                                     Активувати
                                   </button>

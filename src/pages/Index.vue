@@ -24,14 +24,13 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="animate-fade-in">
                                 <h1 class="text-5xl md:text-7xl font-bold text-foreground mb-6">
-                        Динамічний
+                                  Innovation That <br>
                         <span class="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
-                          Конструктор Форм
+                          Inspires
                         </span>
                       </h1>
                       <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-                        Створюйте та керуйте професійними формами з легкістю. Наша платформа підтримує різні типи полів, 
-                        завантаження файлів та безшовну інтеграцію з Google.
+                        Experience the future of technology with Samsung's cutting-edge solutions designed to enhance your digital lifestyle.
                       </p>
                       <button 
                         @click="scrollToForm"
@@ -41,14 +40,6 @@
                       </button>
         </div>
         
-        <!-- Visual Element -->
-        <div class="mt-16 animate-slide-up">
-          <div class="inline-flex items-center justify-center w-24 h-24 bg-primary-100 rounded-full">
-            <svg class="w-12 h-12 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -57,7 +48,7 @@
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
                                 <h2 class="text-4xl font-bold text-foreground mb-4">
-                        Зв'яжіться з нами
+                        Прийняти участь
                       </h2>
                       <p class="text-lg text-gray-600">
                         Заповніть форму нижче, і ми зв'яжемося з вами якомога швидше.
