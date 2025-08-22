@@ -428,14 +428,35 @@ app.post('/api/submissions', upload.single('file'), async (req, res) => {
         console.log('📊 Saving to Google Sheets:', spreadsheetId)
         
         const submissionData = JSON.parse(data)
+        
+        // Get form name from database
+        const form = await new Promise((resolve, reject) => {
+          db.get('SELECT name FROM forms WHERE id = ?', [form_id], (err, row) => {
+            if (err) reject(err);
+            else resolve(row);
+          });
+        });
+        
+        const formName = form ? form.name : 'Unknown Form'
+        
+        // Create dynamic row with only actual data
         const row = [
-          new Date().toISOString(),
-          form_id,
-          ...Object.values(submissionData),
-          '' // Empty file link column
+          new Date().toISOString(),                    // Timestamp
+          formName                                     // Form name from database
         ]
+        
+        // Add all form data dynamically
+        Object.keys(submissionData).forEach(key => {
+          row.push(submissionData[key] || '')
+        })
+        
+        // Add file status only if there was a file field
+        if (req.file) {
+          row.push('Немає файлу')
+        }
 
         console.log('📋 Row data to insert:', row)
+        console.log('📊 Total columns:', row.length)
 
         // Get the first sheet name dynamically
         const spreadsheet = await sheets.spreadsheets.get({ spreadsheetId })
@@ -443,9 +464,13 @@ app.post('/api/submissions', upload.single('file'), async (req, res) => {
         
         console.log('📊 Using sheet:', firstSheetName)
         
+        // Use dynamic range based on actual data length
+        const lastColumn = String.fromCharCode(65 + row.length - 1)
+        const range = `${firstSheetName}!A:${lastColumn}`
+        
         await sheets.spreadsheets.values.append({
           spreadsheetId,
-          range: `${firstSheetName}!A:Z`,
+          range: range,
           valueInputOption: 'RAW',
           requestBody: {
             values: [row]
