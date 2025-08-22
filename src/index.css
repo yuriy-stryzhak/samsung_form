@@ -128,20 +128,26 @@
   }
   
   /* Style select options */
-  .form-select option,
-  .admin-select option {
-    @apply bg-white text-gray-900 py-2 px-3;
-  }
-  
-  .form-select option:hover,
-  .admin-select option:hover {
-    @apply bg-primary-50;
-  }
-  
-  .form-select option:checked,
-  .admin-select option:checked {
-    @apply bg-primary-100 text-primary-900;
-  }
+.form-select option,
+.admin-select option {
+  @apply bg-white text-gray-900 py-2 px-3;
+}
+
+.form-select option:hover,
+.admin-select option:hover {
+  @apply bg-primary-50;
+}
+
+.form-select option:checked,
+.admin-select option:checked {
+  @apply bg-primary-100 text-primary-900;
+}
+
+/* Style disabled option (placeholder) */
+.form-select option:disabled,
+.admin-select option:disabled {
+  @apply bg-gray-100 text-gray-500 cursor-not-allowed;
+}
 
   .card-modern {
     @apply bg-white rounded-xl shadow-lg border border-gray-100 p-6;

@@ -37,7 +37,7 @@ export const useAuthStore = defineStore('auth', () => {
       console.error('Login error:', error)
       return { 
         success: false, 
-        error: error.response?.data?.message || 'Login failed' 
+        error: error.response?.data?.message || 'Недійсні облікові дані' 
       }
     } finally {
       loading.value = false

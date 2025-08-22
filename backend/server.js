@@ -177,12 +177,12 @@ app.post('/api/auth/login', async (req, res) => {
     });
     
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' })
+      return res.status(401).json({ message: 'Недійсні облікові дані' })
     }
 
     const validPassword = await bcrypt.compare(password, user.password_hash)
     if (!validPassword) {
-      return res.status(401).json({ message: 'Invalid credentials' })
+      return res.status(401).json({ message: 'Недійсні облікові дані' })
     }
 
     const token = jwt.sign(

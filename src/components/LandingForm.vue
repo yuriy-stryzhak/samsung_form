@@ -3,14 +3,14 @@
     <form @submit.prevent="handleSubmit" class="space-y-6">
       <!-- Dynamic Fields -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div 
-          v-for="field in sortedFields" 
-          :key="field.id"
-          :class="[
-            'animate-slide-up',
-            field.type === 'textarea' ? 'md:col-span-2' : ''
-          ]"
-        >
+                 <div 
+           v-for="field in sortedFields" 
+           :key="field.id"
+           :class="[
+             'animate-slide-up',
+             field.type === 'textarea' || field.type === 'checkbox' ? 'md:col-span-2' : ''
+           ]"
+         >
           <!-- Text Input -->
           <div v-if="field.type === 'text'">
             <label :for="field.id" class="block text-sm font-medium text-gray-700 mb-2">
@@ -65,21 +65,21 @@
               {{ field.label }}
               <span v-if="field.required" class="text-red-500">*</span>
             </label>
-            <select
-              :id="field.id"
-              v-model="formData[field.id]"
-              :required="field.required"
-              class="form-select h-[50px]"
-            >
-                             <option value="">Оберіть опцію</option>
-              <option 
-                v-for="option in field.options" 
-                :key="option" 
-                :value="option"
-              >
-                {{ option }}
-              </option>
-            </select>
+                         <select
+               :id="field.id"
+               v-model="formData[field.id]"
+               :required="field.required"
+               class="form-select h-[50px]"
+             >
+               <option value="" disabled>{{ field.placeholder || 'Оберіть опцію' }}</option>
+               <option 
+                 v-for="option in field.options" 
+                 :key="option" 
+                 :value="option"
+               >
+                 {{ option }}
+               </option>
+             </select>
           </div>
 
           <!-- Checkbox Input -->
@@ -90,7 +90,7 @@
                 v-model="formData[field.id]"
                 type="checkbox"
                 :required="field.required"
-                class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded shrink-0"
               />
               <label :for="field.id" class="ml-2 block text-sm text-gray-700">
                 {{ field.label }}
@@ -204,6 +204,9 @@ onMounted(() => {
   props.form.fields.forEach(field => {
     if (field.type === 'checkbox') {
       formData.value[field.id] = false
+    } else if (field.type === 'select') {
+      // Для select полей устанавливаем пустое значение, чтобы показать плейсхолдер
+      formData.value[field.id] = ''
     } else {
       formData.value[field.id] = ''
     }
@@ -231,14 +234,17 @@ const handleSubmit = async () => {
     
     if (result.success) {
       showSuccess.value = true
-      // Reset form
-      props.form.fields.forEach(field => {
-        if (field.type === 'checkbox') {
-          formData.value[field.id] = false
-        } else {
-          formData.value[field.id] = ''
-        }
-      })
+             // Reset form
+       props.form.fields.forEach(field => {
+         if (field.type === 'checkbox') {
+           formData.value[field.id] = false
+         } else if (field.type === 'select') {
+           // Для select полей сбрасываем к пустому значению, чтобы показать плейсхолдер
+           formData.value[field.id] = ''
+         } else {
+           formData.value[field.id] = ''
+         }
+       })
       selectedFile.value = null
     } else {
       alert('Помилка відправлення форми: ' + result.error)
