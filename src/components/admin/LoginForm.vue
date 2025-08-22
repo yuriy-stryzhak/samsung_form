@@ -60,7 +60,7 @@
 
                             <div class="text-center">
                       <p class="text-sm text-gray-600">
-                        За замовчуванням: admin@example.com / admin123
+                        Contact administrator for access credentials
                       </p>
                     </div>
       </form>

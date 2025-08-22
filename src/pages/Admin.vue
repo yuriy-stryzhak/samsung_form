@@ -14,18 +14,19 @@
             </div>
             <div class="flex items-center space-x-4">
               <span class="text-gray-600">{{ authStore.user?.email }}</span>
-                                        <button 
-                            @click="authStore.logout()"
-                            class="btn-ghost"
-                          >
-                            Вийти
-                          </button>
-                          <router-link 
-                            to="/" 
-                            class="text-gray-600 hover:text-primary-600 transition-colors duration-200"
-                          >
-                            Переглянути сайт
-                          </router-link>
+              <router-link 
+                to="/" 
+                class="text-gray-600 hover:text-primary-600 transition-colors duration-200"
+              >
+                Переглянути сайт
+              </router-link>
+              <button 
+                @click="authStore.logout()"
+                class="btn-ghost"
+              >
+                Вийти
+              </button>
+                          
             </div>
           </div>
         </div>

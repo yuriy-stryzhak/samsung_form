@@ -23,15 +23,42 @@
   body {
     @apply bg-background text-foreground font-sans;
   }
+
+  /* Remove default browser outline for form elements */
+  input, select, textarea, button {
+    outline: none;
+  }
+
+  input:focus, select:focus, textarea:focus, button:focus {
+    outline: none;
+  }
 }
 
 @layer components {
   .btn-hero {
     @apply bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  .btn-hero:hover::before {
+    left: 100%;
   }
 
   .btn-ghost {
     @apply bg-transparent text-primary-600 border border-primary-600 font-medium py-2 px-6 rounded-lg hover:bg-primary-50 transition-colors duration-200;
+    outline: none;
   }
 
   .btn-dark {
@@ -41,6 +68,7 @@
                 .form-input {
                 @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
                 min-height: 3.125rem; /* 50px */
+                outline: none;
               }
 
   .form-select {
@@ -54,6 +82,7 @@
     background-size: 1.5em 1.5em;
     padding-right: 2.5rem;
     min-height: 3.125rem; /* 50px */
+    outline: none;
   }
   
   .form-select:focus {
@@ -81,6 +110,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
+    outline: none;
   }
 
   input[type="file"]::file-selector-button:hover {
@@ -97,6 +127,7 @@
   .admin-input {
     @apply w-full px-3 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
     min-height: 2.75rem;
+    outline: none;
   }
   
   /* Admin panel select styles */
@@ -110,6 +141,7 @@
     background-repeat: no-repeat;
     background-size: 1.25em 1.25em;
     padding-right: 2.5rem;
+    outline: none;
   }
   
   /* Admin panel textarea styles */
@@ -117,6 +149,7 @@
     @apply admin-input;
     resize: vertical;
     min-height: 4rem;
+    outline: none;
   }
   
   .admin-select:focus {
@@ -173,5 +206,80 @@
 
   .hover-lift {
     @apply transition-transform duration-200 hover:-translate-y-1;
+  }
+
+  /* Animated gradient background */
+  .animate-gradient {
+    background: linear-gradient(-45deg, #dbeafe, #eff6ff, #f0f9ff, #e0f2fe);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+  }
+
+  .animate-gradient-hero {
+    background: linear-gradient(-45deg, #dbeafe, #eff6ff, #f0f9ff, #e0f2fe, #bfdbfe, #dbeafe);
+    background-size: 400% 400%;
+    animation: gradientShift 20s ease infinite;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .animate-gradient-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .animate-gradient-hero > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }

@@ -46,7 +46,7 @@ const upload = multer({
 let db
 
 async function initializeDatabase() {
-  db = new sqlite3.Database(process.env.DATABASE_PATH || './database.sqlite')
+  db = new sqlite3.Database(process.env.DATABASE_PATH || '../database.sqlite')
 
   // Create tables if they don't exist
   await new Promise((resolve, reject) => {

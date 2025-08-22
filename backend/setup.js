@@ -8,9 +8,11 @@ dotenv.config()
 async function setupDatabase() {
   console.log('Setting up database...')
   
+  let db
+  
   try {
-      // Open database
-  const db = new sqlite3.Database(process.env.DATABASE_PATH || './database.sqlite')
+    // Open database
+    db = new sqlite3.Database(process.env.DATABASE_PATH || '../database.sqlite')
 
     // Create tables
     console.log('Creating tables...')
@@ -61,8 +63,8 @@ async function setupDatabase() {
 
     // Create admin user
     console.log('Creating admin user...')
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@example.com'
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123'
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@samsung.com'
+    const adminPassword = process.env.ADMIN_PASSWORD || 'm8<\\.XZSHnv;hL?'
     
     const userExists = await new Promise((resolve, reject) => {
       db.get('SELECT id FROM users WHERE email = ?', [adminEmail], (err, row) => {
@@ -167,9 +169,7 @@ async function setupDatabase() {
     }
 
     console.log('Database setup completed successfully!')
-    console.log('\nDefault credentials:')
-    console.log(`Email: ${adminEmail}`)
-    console.log(`Password: ${adminPassword}`)
+    console.log(`Admin user created: ${adminEmail}`)
     console.log('\nYou can now start the server with: npm run backend')
 
   } catch (error) {
@@ -177,13 +177,15 @@ async function setupDatabase() {
     process.exit(1)
   } finally {
     // Close database connection
-    db.close((err) => {
-      if (err) {
-        console.error('Error closing database:', err);
-      } else {
-        console.log('Database connection closed');
-      }
-    });
+    if (db) {
+      db.close((err) => {
+        if (err) {
+          console.error('Error closing database:', err);
+        } else {
+          console.log('Database connection closed');
+        }
+      });
+    }
   }
 }
 

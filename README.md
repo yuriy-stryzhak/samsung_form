@@ -2,6 +2,8 @@
 
 A modern, full-stack form builder application built with Vue 3, featuring dynamic form creation, admin panel, and Google integrations.
 
+> **📖 For detailed setup instructions, see [QUICK_START.md](./QUICK_START.md)**
+
 ## 🚀 Features
 
 ### Frontend (Vue 3 + Composition API)
@@ -23,6 +25,17 @@ A modern, full-stack form builder application built with Vue 3, featuring dynami
 - **Google Sheets**: Form submissions automatically logged to spreadsheets
 - **Cross-platform**: Works on Windows, macOS, and Linux
 
+## 🔧 Available Scripts
+
+```bash
+npm run dev          # Start both frontend and backend
+npm run frontend     # Start only frontend (Vite dev server)
+npm run backend      # Start only backend (Express server)
+npm run build        # Build frontend for production
+npm run preview      # Preview production build
+npm run setup        # Initialize database
+```
+
 ## 🛠️ Tech Stack
 
 - **Frontend**: Vue 3, TypeScript, Tailwind CSS, Pinia, Vue Router
@@ -36,6 +49,8 @@ A modern, full-stack form builder application built with Vue 3, featuring dynami
 - Google Cloud Platform account (for Drive/Sheets integration)
 
 ## 🚀 Quick Start
+
+**For detailed setup instructions, see [QUICK_START.md](./QUICK_START.md)**
 
 ### 1. Clone and Install
 
@@ -61,14 +76,14 @@ PORT=5000
 NODE_ENV=development
 
 # Database Configuration
-DATABASE_PATH=./database.sqlite
+DATABASE_PATH=../database.sqlite
 
 # JWT Configuration
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 
-# Admin User
-ADMIN_EMAIL=admin@example.com
-ADMIN_PASSWORD=admin123
+# Admin User (will be created automatically)
+ADMIN_EMAIL=your-admin-email@example.com
+ADMIN_PASSWORD=your-secure-password
 
 # Google API Configuration
 GOOGLE_APPLICATION_CREDENTIALS=./backend/service-account-key.json
@@ -76,7 +91,36 @@ GOOGLE_DRIVE_FOLDER_ID=your-google-drive-folder-id
 GOOGLE_SHEETS_ID=your-google-sheets-id
 ```
 
-### 3. Google API Setup
+### 3. Database Setup
+
+Initialize the database with admin user:
+
+```bash
+node backend/setup.js
+```
+
+### 4. Start Development Servers
+
+**Option A: Run both frontend and backend (recommended for development)**
+```bash
+npm run dev
+```
+
+**Option B: Run separately**
+```bash
+# Terminal 1 - Backend
+npm run backend
+
+# Terminal 2 - Frontend  
+npm run frontend
+```
+
+### 5. Access the Application
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:5000
+- **Admin Panel**: http://localhost:3000/admin
+
+### 6. Google API Setup
 
 #### Create Service Account
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
@@ -216,6 +260,14 @@ samsung-form/
 - Add new routes in `backend/server.js`
 - Extend database schema in `backend/setup.js`
 - Modify Google API integrations as needed
+
+## 🔐 Security Notes
+
+- Change default JWT_SECRET in production
+- Use strong passwords for admin accounts
+- Configure proper CORS settings for production
+- Set up HTTPS in production environment
+- Regularly update dependencies
 
 ## 🚀 Deployment
 

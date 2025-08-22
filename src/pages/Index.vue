@@ -20,26 +20,32 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="py-20 bg-gradient-to-br from-primary-50 to-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section class="py-20 animate-gradient-hero relative">
+      <!-- Floating elements -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 left-10 w-32 h-32 bg-primary-200 rounded-full opacity-20 animate-pulse"></div>
+        <div class="absolute top-40 right-20 w-24 h-24 bg-primary-300 rounded-full opacity-15 animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-20 left-1/4 w-16 h-16 bg-primary-400 rounded-full opacity-25 animate-pulse" style="animation-delay: 2s;"></div>
+      </div>
+      
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         <div class="animate-fade-in">
-                                <h1 class="text-5xl md:text-7xl font-bold text-foreground mb-6">
-                                  Innovation That <br>
-                        <span class="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
-                          Inspires
-                        </span>
-                      </h1>
-                      <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-                        Experience the future of technology with Samsung's cutting-edge solutions designed to enhance your digital lifestyle.
-                      </p>
-                      <button 
-                        @click="scrollToForm"
-                        class="btn-hero animate-scale-in"
-                      >
-                        Почати
-                      </button>
+          <h1 class="text-5xl md:text-7xl font-bold text-foreground mb-6">
+            Innovation That <br>
+            <span class="bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent">
+              Inspires
+            </span>
+          </h1>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            Experience the future of technology with Samsung's cutting-edge solutions designed to enhance your digital lifestyle.
+          </p>
+          <button 
+            @click="scrollToForm"
+            class="btn-hero animate-scale-in"
+          >
+            Почати
+          </button>
         </div>
-        
       </div>
     </section>
 
@@ -51,7 +57,7 @@
                         Прийняти участь
                       </h2>
                       <p class="text-lg text-gray-600">
-                        Заповніть форму нижче, і ми зв'яжемося з вами якомога швидше.
+                        Заповніть форму нижче
                       </p>
         </div>
 
