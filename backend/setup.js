@@ -95,7 +95,7 @@ async function setupDatabase() {
       name: 'Contact Form',
       fields: [
         {
-          id: 'name',
+          id: `field_${Date.now()}_0`,
           type: 'text',
           label: 'Full Name',
           required: true,
@@ -103,7 +103,7 @@ async function setupDatabase() {
           order: 0
         },
         {
-          id: 'email',
+          id: `field_${Date.now()}_1`,
           type: 'email',
           label: 'Email Address',
           required: true,
@@ -111,7 +111,7 @@ async function setupDatabase() {
           order: 1
         },
         {
-          id: 'phone',
+          id: `field_${Date.now()}_2`,
           type: 'phone',
           label: 'Phone Number',
           required: false,
@@ -119,7 +119,7 @@ async function setupDatabase() {
           order: 2
         },
         {
-          id: 'subject',
+          id: `field_${Date.now()}_3`,
           type: 'select',
           label: 'Subject',
           required: true,
@@ -127,7 +127,7 @@ async function setupDatabase() {
           order: 3
         },
         {
-          id: 'message',
+          id: `field_${Date.now()}_4`,
           type: 'textarea',
           label: 'Message',
           required: true,
@@ -135,7 +135,7 @@ async function setupDatabase() {
           order: 4
         },
         {
-          id: 'agreement',
+          id: `field_${Date.now()}_5`,
           type: 'checkbox',
           label: 'I agree to the terms and conditions',
           required: true,

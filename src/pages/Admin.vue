@@ -161,7 +161,7 @@
                                   <td class="px-6 py-4 text-sm text-gray-900">
                                     <div class="max-w-xs">
                                       <div v-for="(value, key) in submission.submission" :key="key" class="mb-1">
-                                        <span class="font-medium text-gray-700">{{ key }}:</span>
+                                        <span class="font-medium text-gray-700">{{ getFieldLabel(submission.form_id, key) }}:</span>
                                         <span class="text-gray-600 ml-2">{{ value }}</span>
                                       </div>
                                     </div>
@@ -271,6 +271,14 @@ const formatDate = (dateString: string) => {
             const getFormName = (formId: number) => {
               const form = formsStore.forms.find(f => f.id === formId)
               return form ? form.name : 'Невідома форма'
+            }
+
+            const getFieldLabel = (formId: number, fieldId: string) => {
+              const form = formsStore.forms.find(f => f.id === formId)
+              if (!form) return fieldId
+              
+              const field = form.fields.find(f => f.id === fieldId)
+              return field ? field.label : fieldId
             }
 
             const deleteSubmission = async (id: number) => {
