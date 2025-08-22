@@ -4,7 +4,7 @@
   "description": "Vue 3 form application with admin panel and Google integrations",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "frontend": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "backend": "node backend/server.js",

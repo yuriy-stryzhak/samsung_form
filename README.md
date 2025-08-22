@@ -1,6 +1,6 @@
 # Samsung Form - Vue 3 Dynamic Form Builder
 
-A modern, full-stack form builder application built with Vue 3, featuring dynamic form creation, admin panel, and Google integrations.
+A modern, full-stack form builder application built with Vue 3, featuring dynamic form creation, admin panel, and Google Sheets integration.
 
 > **📖 For detailed setup instructions, see [QUICK_START.md](./QUICK_START.md)**
 
@@ -17,18 +17,16 @@ A modern, full-stack form builder application built with Vue 3, featuring dynami
 - **RESTful API**: Clean, RESTful endpoints for all operations
 - **SQLite Database**: Lightweight, file-based database for easy deployment
 - **Authentication**: JWT-based authentication system
-- **File Handling**: Secure file uploads with size limits and validation
+- **Form Processing**: Secure form submission handling
 - **Rate Limiting**: Built-in protection against abuse
 
 ### Integrations
-- **Google Drive**: Automatic file uploads with public sharing
 - **Google Sheets**: Form submissions automatically logged to spreadsheets
 - **Cross-platform**: Works on Windows, macOS, and Linux
 
 ## 🔧 Available Scripts
 
 ```bash
-npm run dev          # Start both frontend and backend
 npm run frontend     # Start only frontend (Vite dev server)
 npm run backend      # Start only backend (Express server)
 npm run build        # Build frontend for production
@@ -39,14 +37,14 @@ npm run setup        # Initialize database
 ## 🛠️ Tech Stack
 
 - **Frontend**: Vue 3, TypeScript, Tailwind CSS, Pinia, Vue Router
-- **Backend**: Node.js, Express, SQLite, JWT, Multer
+- **Backend**: Node.js, Express, SQLite, JWT
 - **Build Tools**: Vite, PostCSS
-- **Integrations**: Google APIs (Drive, Sheets)
+- **Integrations**: Google Sheets API
 
 ## 📋 Prerequisites
 
 - Node.js 18+ and npm
-- Google Cloud Platform account (for Drive/Sheets integration)
+- Google Cloud Platform account (for Sheets integration)
 
 ## 🚀 Quick Start
 
@@ -87,7 +85,6 @@ ADMIN_PASSWORD=your-secure-password
 
 # Google API Configuration
 GOOGLE_APPLICATION_CREDENTIALS=./backend/service-account-key.json
-GOOGLE_DRIVE_FOLDER_ID=your-google-drive-folder-id
 GOOGLE_SHEETS_ID=your-google-sheets-id
 ```
 
@@ -96,7 +93,7 @@ GOOGLE_SHEETS_ID=your-google-sheets-id
 Initialize the database with admin user:
 
 ```bash
-node backend/setup.js
+npm run setup
 ```
 
 ### 4. Start Development Servers
@@ -125,16 +122,10 @@ npm run frontend
 #### Create Service Account
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select existing one
-3. Enable Google Drive API and Google Sheets API
+3. Enable Google Sheets API
 4. Create a Service Account
 5. Download the JSON key file
 6. Place it in `backend/service-account-key.json`
-
-#### Google Drive Setup
-1. Create a folder in Google Drive
-2. Share it with your service account email (with Editor permissions)
-3. Copy the folder ID from the URL
-4. Add to `GOOGLE_DRIVE_FOLDER_ID` in `.env`
 
 #### Google Sheets Setup
 1. Create a new Google Sheet

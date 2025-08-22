@@ -1,0 +1,110 @@
+
+# Samsung Form Project Rules
+
+## Project Overview
+This is a modern Vue.js 3-based landing page application with an admin panel for form management. The project features a Samsung-inspired design system with dynamic form building capabilities and responsive design.
+
+## Project Structure
+```
+samsung_form/
+├── backend/                    # Node.js backend server
+│   ├── server.js              # Main server file
+│   └── setup.js               # Server setup and configuration
+├── public/                     # Static assets
+│   └── favicon.svg            # SVG favicon (preferred format)
+├── src/                        # Vue.js frontend source
+│   ├── components/             # Vue components
+│   │   ├── admin/             # Admin-specific components
+│   │   └── LandingForm.vue    # Main contact form
+│   ├── pages/                 # Route components
+│   ├── stores/                # Pinia state management
+│   └── router/                # Vue Router configuration
+├── index.html                  # Main HTML entry point
+├── tailwind.config.js         # Tailwind CSS configuration
+└── vite.config.ts             # Vite build configuration
+```
+
+**Note**: The `lov-app/` directory is ignored by `.gitignore` and contains a separate React application that is not part of the main project structure.
+
+## Technology Stack
+
+### Frontend (Main Project)
+- **Vue.js 3** with Composition API
+- **Vite** as build tool
+- **Tailwind CSS** for styling
+- **Vue Router** for client-side routing
+- **Pinia** for state management
+- **TypeScript** for type safety
+
+### Backend
+- **Node.js** server
+- **Express.js** framework
+- **Google Sheets API** integration (Google Drive functionality removed)
+
+### Ignored Directories
+- **`lov-app/`** - Separate React application (ignored by .gitignore)
+- **`node_modules/`** - Dependencies (ignored by .gitignore)
+
+## Design System
+
+### Color Palette
+- **Primary**: Blue accent (#3B82F6)
+- **Background**: Pure white (#FFFFFF)
+- **Foreground**: Near black (#0F0F23)
+- **Muted**: Light gray (#F8F9FA)
+- **Success**: Green (#16A34A)
+- **Destructive**: Red (#DC2626)
+- **Warning**: Orange (#F59E0B)
+
+### Typography
+- **Font Family**: Inter (Google Fonts)
+- **Heading Scale**: text-5xl to text-7xl for hero sections
+- **Body Text**: text-base with responsive scaling
+- **Font Weights**: 400 (normal), 600 (semibold), 700 (bold)
+
+### Component Variants
+- **Button Variants**: btn-hero, btn-ghost, btn-dark
+- **Form Components**: form-input, form-select
+- **Card Variants**: card-modern, card-dark
+
+### Animations
+- **Fade In**: animate-fade-in
+- **Scale In**: animate-scale-in
+- **Slide Up**: animate-slide-up
+- **Hover Effects**: hover-lift
+
+## Coding Standards
+
+### File Naming
+- **Components**: PascalCase (e.g., `LandingForm.vue`)
+- **Pages**: PascalCase (e.g., `Index.vue`)
+- **Stores**: camelCase (e.g., `auth.ts`)
+- **Utilities**: kebab-case (e.g., `utils.ts`)
+
+### Component Structure
+```vue
+<template>
+  <!-- Template content -->
+</template>
+
+<script setup lang="ts">
+// Import order: Vue, third-party, internal
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+// Interface definitions
+interface ComponentProps {
+  prop: string
+}
+
+// Component implementation with proper typing
+const props = defineProps<ComponentProps>()
+</script>
+
+<style scoped>
+/* Component styles */
+</style>
+
+- Do not convert to PNG or ICO formats
+- Maintain vector quality for all screen resolutions

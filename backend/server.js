@@ -33,7 +33,7 @@ const limiter = rateLimit({
 })
 app.use('/api/', limiter)
 
-// File upload configuration
+// File upload configuration (kept for form compatibility, but files are not processed)
 const storage = multer.memoryStorage()
 const upload = multer({ 
   storage: storage,
@@ -119,16 +119,14 @@ async function initializeDatabase() {
   console.log('Database initialized')
 }
 
-// Google API setup
+// Google API setup (Google Sheets only)
 const googleAuth = new google.auth.GoogleAuth({
   keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
   scopes: [
-    'https://www.googleapis.com/auth/drive',
     'https://www.googleapis.com/auth/spreadsheets'
   ]
 })
 
-const drive = google.drive({ version: 'v3', auth: googleAuth })
 const sheets = google.sheets({ version: 'v4', auth: googleAuth })
 
 // Authentication middleware
@@ -397,62 +395,25 @@ app.delete('/api/submissions/:id', authenticateToken, async (req, res) => {
 
 app.post('/api/submissions', upload.single('file'), async (req, res) => {
   try {
+    console.log('📝 New submission received')
+    console.log('📋 Form ID:', req.body.form_id)
+    console.log('📋 Form data:', req.body.data)
+    console.log('📁 File:', req.file ? req.file.originalname : 'No file')
+    
     const { form_id, data } = req.body
     const file = req.file
 
-    let fileLink = null
-
-    // Handle file upload to Google Drive if file exists
+    // Note: File upload functionality has been removed
+    // Files are no longer uploaded to Google Drive
     if (file) {
-      try {
-        const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID
-        if (!folderId) {
-          throw new Error('Google Drive folder ID not configured')
-        }
-
-        const fileMetadata = {
-          name: file.originalname,
-          parents: [folderId]
-        }
-
-        const media = {
-          mimeType: file.mimetype,
-          body: file.buffer
-        }
-
-        const uploadedFile = await drive.files.create({
-          requestBody: fileMetadata,
-          media: media,
-          fields: 'id'
-        })
-
-        // Make file publicly accessible
-        await drive.permissions.create({
-          fileId: uploadedFile.data.id,
-          requestBody: {
-            role: 'reader',
-            type: 'anyone'
-          }
-        })
-
-        // Get public link
-        const fileInfo = await drive.files.get({
-          fileId: uploadedFile.data.id,
-          fields: 'webViewLink'
-        })
-
-        fileLink = fileInfo.data.webViewLink
-      } catch (fileError) {
-        console.error('File upload error:', fileError)
-        // Continue without file if upload fails
-      }
+      console.log('📁 File received but not uploaded (functionality removed)')
     }
 
-    // Save to database
+    // Save to database (without file_link)
     const result = await new Promise((resolve, reject) => {
       db.run(
         'INSERT INTO submissions (form_id, submission, file_link) VALUES (?, ?, ?)',
-        [form_id, data, fileLink],
+        [form_id, data, null], // file_link is now always null
         function(err) {
           if (err) reject(err);
           else resolve({ lastID: this.lastID });
@@ -464,25 +425,44 @@ app.post('/api/submissions', upload.single('file'), async (req, res) => {
     try {
       const spreadsheetId = process.env.GOOGLE_SHEETS_ID
       if (spreadsheetId) {
+        console.log('📊 Saving to Google Sheets:', spreadsheetId)
+        
         const submissionData = JSON.parse(data)
         const row = [
           new Date().toISOString(),
           form_id,
           ...Object.values(submissionData),
-          fileLink || ''
+          '' // Empty file link column
         ]
 
+        console.log('📋 Row data to insert:', row)
+
+        // Get the first sheet name dynamically
+        const spreadsheet = await sheets.spreadsheets.get({ spreadsheetId })
+        const firstSheetName = spreadsheet.data.sheets[0].properties.title
+        
+        console.log('📊 Using sheet:', firstSheetName)
+        
         await sheets.spreadsheets.values.append({
           spreadsheetId,
-          range: 'Sheet1!A:Z',
+          range: `${firstSheetName}!A:Z`,
           valueInputOption: 'RAW',
           requestBody: {
             values: [row]
           }
         })
+        
+        console.log('✅ Data saved to Google Sheets successfully')
+      } else {
+        console.log('⚠️  Google Sheets ID not configured')
       }
     } catch (sheetsError) {
-      console.error('Google Sheets error:', sheetsError)
+      console.error('❌ Google Sheets error:', sheetsError)
+      console.error('❌ Google Sheets error details:', {
+        message: sheetsError.message,
+        code: sheetsError.code,
+        status: sheetsError.status
+      })
       // Continue if sheets integration fails
     }
 
@@ -490,7 +470,7 @@ app.post('/api/submissions', upload.single('file'), async (req, res) => {
       id: result.lastID,
       form_id: parseInt(form_id),
       submission: JSON.parse(data),
-      file_link: fileLink,
+      file_link: null, // Always null now
       created_at: new Date().toISOString()
     })
   } catch (error) {
