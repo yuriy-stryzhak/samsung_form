@@ -179,7 +179,7 @@
                       Ваша форма успішно відправлена. Ми зв'яжемося з вами найближчим часом.
                     </p>
                     <button 
-                      @click="showSuccess = false"
+                      @click="closeSuccessModal"
                       class="btn-hero"
                     >
                       Закрити
@@ -247,6 +247,35 @@ const formatFileSize = (bytes: number) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }
 
+// Close success modal and reset form completely
+const closeSuccessModal = () => {
+  showSuccess.value = false
+  
+  // Reset form data
+  props.form.fields.forEach(field => {
+    if (field.type === 'checkbox') {
+      formData.value[field.id] = false
+    } else if (field.type === 'select') {
+      formData.value[field.id] = ''
+    } else {
+      formData.value[field.id] = ''
+    }
+  })
+  
+  // Reset file
+  selectedFile.value = null
+  
+  // Clear all file inputs
+  const fileInputs = document.querySelectorAll('input[type="file"]')
+  fileInputs.forEach((input) => {
+    if (input instanceof HTMLInputElement) {
+      input.value = ''
+    }
+  })
+}
+
+
+
 // Handle form submission
 const handleSubmit = async () => {
   try {
@@ -260,18 +289,39 @@ const handleSubmit = async () => {
     
     if (result.success) {
       showSuccess.value = true
-             // Reset form
-       props.form.fields.forEach(field => {
-         if (field.type === 'checkbox') {
-           formData.value[field.id] = false
-         } else if (field.type === 'select') {
-           // Для select полей сбрасываем к пустому значению, чтобы показать плейсхолдер
-           formData.value[field.id] = ''
-         } else {
-           formData.value[field.id] = ''
-         }
-       })
+      
+      // Reset form
+      props.form.fields.forEach(field => {
+        if (field.type === 'checkbox') {
+          formData.value[field.id] = false
+        } else if (field.type === 'select') {
+          // Для select полей сбрасываем к пустому значению, чтобы показать плейсхолдер
+          formData.value[field.id] = ''
+        } else {
+          formData.value[field.id] = ''
+        }
+      })
+      
+      // Reset file input
       selectedFile.value = null
+      
+      // Clear file input element
+      const fileInputs = document.querySelectorAll('input[type="file"]')
+      fileInputs.forEach((input) => {
+        if (input instanceof HTMLInputElement) {
+          input.value = ''
+        }
+      })
+      
+      // Also clear any file input by ID if we know the field ID
+      props.form.fields.forEach(field => {
+        if (field.type === 'file') {
+          const fileInput = document.getElementById(field.id) as HTMLInputElement
+          if (fileInput) {
+            fileInput.value = ''
+          }
+        }
+      })
     } else {
       alert('Помилка відправлення форми: ' + result.error)
     }
