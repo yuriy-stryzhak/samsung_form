@@ -18,6 +18,12 @@ const routes = [
     meta: { public: false }
   },
   {
+    path: '/admin/submissions',
+    name: 'AdminSubmissions',
+    component: Admin,
+    meta: { public: false }
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: NotFound,

@@ -47,7 +47,7 @@
           <button
             v-for="tab in tabs"
             :key="tab.id"
-            @click="activeTab = tab.id"
+            @click="switchTab(tab.id)"
             :class="[
               'py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-200',
               activeTab === tab.id
@@ -58,6 +58,7 @@
             {{ tab.name }}
           </button>
         </nav>
+
       </div>
 
       <!-- Tab Content -->
@@ -242,17 +243,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { useFormsStore } from '@/stores/forms'
 import FormBuilderModal from '@/components/admin/FormBuilderModal.vue'
 import LoginForm from '@/components/admin/LoginForm.vue'
 import type { Form } from '@/stores/forms'
 
+const route = useRoute()
+const router = useRouter()
 const authStore = useAuthStore()
 const formsStore = useFormsStore()
 
-const activeTab = ref('forms')
+// Determine active tab based on route
+const activeTab = ref(route.path === '/admin/submissions' ? 'submissions' : 'forms')
 const showCreateForm = ref(false)
 const editingForm = ref<Form | null>(null)
 
@@ -269,6 +274,25 @@ const sortedForms = computed(() => {
               { id: 'forms', name: 'Конструктор Форм' },
               { id: 'submissions', name: 'Відправлення' }
             ]
+
+// Function to handle tab switching
+const switchTab = (tabId: string) => {
+  activeTab.value = tabId
+  if (tabId === 'submissions') {
+    router.push('/admin/submissions')
+  } else {
+    router.push('/admin')
+  }
+}
+
+// Watch for route changes to update active tab
+watch(() => route.path, (newPath) => {
+  if (newPath === '/admin/submissions') {
+    activeTab.value = 'submissions'
+  } else if (newPath === '/admin') {
+    activeTab.value = 'forms'
+  }
+})
 
 // Fetch data on mount
 onMounted(async () => {
