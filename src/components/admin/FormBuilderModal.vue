@@ -198,7 +198,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import type { Form, FormField } from '@/stores/forms'
 
 interface Props {
@@ -207,6 +207,9 @@ interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits(['close', 'save'])
+
+// Computed property to determine if we're editing an existing form
+const editingForm = computed(() => !!props.form)
 
 const formData = ref({
   name: '',
