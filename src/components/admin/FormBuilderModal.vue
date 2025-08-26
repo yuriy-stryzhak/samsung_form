@@ -40,8 +40,11 @@
                         <button 
                           type="button"
                           @click="addField"
-                          class="btn-ghost"
+                          class="btn-ghost flex items-center gap-2"
                         >
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                          </svg>
                           Додати поле
                         </button>
                       </div>
@@ -123,35 +126,38 @@
                 </div>
 
                 <div class="flex items-center space-x-2">
-                  <button 
-                    type="button"
-                    @click="moveField(index, -1)"
-                    :disabled="index === 0"
-                    class="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
-                  >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
-                    </svg>
-                  </button>
-                  <button 
-                    type="button"
-                    @click="moveField(index, 1)"
-                    :disabled="index === formData.fields.length - 1"
-                    class="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
-                  >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                  </button>
-                  <button 
-                    type="button"
-                    @click="removeField(index)"
-                    class="p-2 text-red-400 hover:text-red-600"
-                  >
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                    </svg>
-                  </button>
+                                     <button 
+                     type="button"
+                     @click="moveField(index, -1)"
+                     :disabled="index === 0"
+                     class="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                     title="Перемістити вгору"
+                   >
+                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                     </svg>
+                   </button>
+                   <button 
+                     type="button"
+                     @click="moveField(index, 1)"
+                     :disabled="index === formData.fields.length - 1"
+                     class="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50"
+                     title="Перемістити вниз"
+                   >
+                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                     </svg>
+                   </button>
+                   <button 
+                     type="button"
+                     @click="removeField(index)"
+                     class="p-2 text-red-400 hover:text-red-600"
+                     title="Видалити поле"
+                   >
+                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                     </svg>
+                   </button>
                 </div>
               </div>
             </div>
@@ -177,18 +183,24 @@
                     </div>
 
         <!-- Action Buttons -->
-        <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+        <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t border-gray-200">
                                 <button 
                         type="button"
                         @click="$emit('close')"
-                        class="btn-ghost"
+                        class="btn-ghost w-full sm:w-auto order-2 sm:order-1"
                       >
                         Скасувати
                       </button>
                       <button 
                         type="submit"
-                        class="btn-hero"
+                        class="btn-hero flex items-center justify-center gap-2 w-full sm:w-auto order-1 sm:order-2"
                       >
+                        <svg v-if="!editingForm" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                        </svg>
                         {{ editingForm ? 'Оновити форму' : 'Створити форму' }}
                       </button>
         </div>

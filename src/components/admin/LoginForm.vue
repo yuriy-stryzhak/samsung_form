@@ -46,7 +46,7 @@
         <button
           type="submit"
           :disabled="loading"
-          class="w-full btn-hero disabled:opacity-50 disabled:cursor-not-allowed"
+          class="w-full btn-hero disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
                                   <span v-if="loading" class="flex items-center justify-center">
                           <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -55,7 +55,12 @@
                           </svg>
                           Вхід...
                         </span>
-                        <span v-else>Увійти</span>
+                        <span v-else class="flex items-center gap-2">
+                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+                          </svg>
+                          Увійти
+                        </span>
         </button>
 
                             <div class="text-center">

@@ -146,7 +146,12 @@
               </svg>
               Відправлення...
             </span>
-          <span v-else>Відправити форму</span>
+          <span v-else class="flex items-center gap-2">
+            <svg class="w-5 h-5 rotate-45 -mt-1 opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            </svg>
+            Відправити форму
+          </span>
         </button>
       </div>
     </form>
