@@ -504,29 +504,74 @@ app.post('/api/submissions', upload.single('file'), async (req, res) => {
           row.push('Немає файлу')
         }
 
-        console.log('📋 Row data to insert:', row)
-        console.log('📊 Total columns:', row.length)
-
         // Get the first sheet name dynamically
         const spreadsheet = await sheets.spreadsheets.get({ spreadsheetId })
-        const firstSheetName = spreadsheet.data.sheets[0].properties.title
+        
+        if (!spreadsheet.data.sheets || spreadsheet.data.sheets.length === 0) {
+          throw new Error('No sheets found in the spreadsheet')
+        }
+        
+        const firstSheet = spreadsheet.data.sheets[0]
+        const firstSheetName = firstSheet.properties.title
+        const sheetId = firstSheet.properties.sheetId
         
         console.log('📊 Using sheet:', firstSheetName)
+        console.log('📊 Sheet ID:', sheetId)
         
-        // Use dynamic range based on actual data length
-        const lastColumn = String.fromCharCode(65 + row.length - 1)
-        const range = `${firstSheetName}!A:${lastColumn}`
+        // Always append to column A to ensure each submission starts from the first column
+        // Use proper Google Sheets range format: SheetName!A1 for append
+        // For all sheet names, use the sheet name directly with proper escaping
+        let range
+        if (/[а-яё]/i.test(firstSheetName) || /[^a-zA-Z0-9_]/i.test(firstSheetName)) {
+          // For Cyrillic or special character sheet names, use quotes
+          // Google Sheets API can handle special names if properly quoted
+          range = `'${firstSheetName}'!A1`
+          console.log('📊 Using quoted sheet name for special characters:', range)
+        } else {
+          range = `${firstSheetName}!A1`
+        }
         
-        await sheets.spreadsheets.values.append({
-          spreadsheetId,
-          range: range,
-          valueInputOption: 'RAW',
-          requestBody: {
-            values: [row]
-          }
-        })
+        console.log('📋 Row data to insert:', row)
+        console.log('📊 Total columns:', row.length)
+        console.log('📊 Range for insertion:', range)
+        console.log('📊 Insert option: INSERT_ROWS')
         
-        console.log('✅ Data saved to Google Sheets successfully')
+        let response
+        try {
+          response = await sheets.spreadsheets.values.append({
+            spreadsheetId,
+            range: range,
+            valueInputOption: 'RAW',
+            insertDataOption: 'INSERT_ROWS', // Force new row insertion
+            requestBody: {
+              values: [row]
+            }
+          })
+          
+          console.log('✅ Data saved to Google Sheets successfully')
+          console.log('📊 Response from Google Sheets:', {
+            updatedRange: response.data.updates?.updatedRange,
+            updatedRows: response.data.updates?.updatedRows,
+            updatedColumns: response.data.updates?.updatedColumns
+          })
+        } catch (appendError) {
+          // If the first attempt fails, try with a simpler range
+          console.log('⚠️  First attempt failed, trying alternative range...')
+          
+          const alternativeRange = 'A1' // Just use A1 without sheet name
+          response = await sheets.spreadsheets.values.append({
+            spreadsheetId,
+            range: alternativeRange,
+            valueInputOption: 'RAW',
+            insertDataOption: 'INSERT_ROWS',
+            requestBody: {
+              values: [row]
+            }
+          })
+          
+          console.log('✅ Data saved to Google Sheets with alternative range')
+          console.log('📊 Alternative range used:', alternativeRange)
+        }
       } else {
         console.log('⚠️  Google Sheets ID not configured')
       }
