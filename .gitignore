@@ -13,6 +13,7 @@ yarn-error.log*
 
 # Ignored directories
 lov-app/
+uploads/
 
 # Google API credentials
 backend/*.json

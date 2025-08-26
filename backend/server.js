@@ -33,12 +33,54 @@ const limiter = rateLimit({
 })
 app.use('/api/', limiter)
 
-// File upload configuration (kept for form compatibility, but files are not processed)
-const storage = multer.memoryStorage()
+// Error handling middleware for file uploads
+app.use((error, req, res, next) => {
+  if (error instanceof multer.MulterError) {
+    if (error.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({ message: 'Файл занадто великий. Максимальний розмір: 10MB' })
+    }
+    return res.status(400).json({ message: 'Помилка завантаження файлу: ' + error.message })
+  } else if (error) {
+    return res.status(400).json({ message: error.message })
+  }
+  next()
+})
+
+// File upload configuration
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '../uploads/'))
+  },
+  filename: function (req, file, cb) {
+    // Generate unique filename with timestamp
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    const ext = path.extname(file.originalname)
+    const name = path.basename(file.originalname, ext)
+    cb(null, name + '-' + uniqueSuffix + ext)
+  }
+})
+
 const upload = multer({ 
   storage: storage,
   limits: {
     fileSize: 10 * 1024 * 1024 // 10MB limit
+  },
+  fileFilter: function (req, file, cb) {
+    // Allow common file types
+    const allowedTypes = [
+      'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+      'application/pdf', 'application/msword', 
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'text/plain', 'text/csv'
+    ]
+    
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true)
+    } else {
+      cb(new Error('Непідтримуваний тип файлу'), false)
+    }
   }
 })
 
@@ -403,17 +445,22 @@ app.post('/api/submissions', upload.single('file'), async (req, res) => {
     const { form_id, data } = req.body
     const file = req.file
 
-    // Note: File upload functionality has been removed
-    // Files are no longer uploaded to Google Drive
+    let fileLink = null
+    
+    // Process file if uploaded
     if (file) {
-      console.log('📁 File received but not uploaded (functionality removed)')
+      console.log('📁 File uploaded successfully:', file.filename)
+      // Create full URL for file access
+      const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`
+      fileLink = `${baseUrl}/uploads/${file.filename}`
+      console.log('🔗 File link created:', fileLink)
     }
 
-    // Save to database (without file_link)
+    // Save to database with file link
     const result = await new Promise((resolve, reject) => {
       db.run(
         'INSERT INTO submissions (form_id, submission, file_link) VALUES (?, ?, ?)',
-        [form_id, data, null], // file_link is now always null
+        [form_id, data, fileLink],
         function(err) {
           if (err) reject(err);
           else resolve({ lastID: this.lastID });
@@ -450,8 +497,10 @@ app.post('/api/submissions', upload.single('file'), async (req, res) => {
           row.push(submissionData[key] || '')
         })
         
-        // Add file status only if there was a file field
-        if (req.file) {
+        // Add file information with full URL for clickable links in Google Sheets
+        if (file) {
+          row.push(fileLink || 'Файл завантажено')
+        } else {
           row.push('Немає файлу')
         }
 
@@ -495,7 +544,7 @@ app.post('/api/submissions', upload.single('file'), async (req, res) => {
       id: result.lastID,
       form_id: parseInt(form_id),
       submission: JSON.parse(data),
-      file_link: null, // Always null now
+      file_link: fileLink,
       created_at: new Date().toISOString()
     })
   } catch (error) {
@@ -503,6 +552,9 @@ app.post('/api/submissions', upload.single('file'), async (req, res) => {
     res.status(500).json({ message: 'Internal server error' })
   }
 })
+
+// Serve uploaded files
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
 // Health check
 app.get('/api/health', (req, res) => {

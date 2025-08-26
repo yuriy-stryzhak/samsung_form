@@ -2,12 +2,15 @@
 
 A modern, full-stack form builder application built with Vue 3, featuring dynamic form creation, admin panel, and Google Sheets integration.
 
-> **📖 For detailed setup instructions, see [QUICK_START.md](./QUICK_START.md)**
+> **📖 For detailed setup instructions, see [QUICK_START.md](./QUICK_START.md)**  
+> **📁 For file upload functionality details, see [FILE_UPLOAD_README.md](./FILE_UPLOAD_README.md)**  
+> **🚀 For production deployment, see [PRODUCTION_SETUP.md](./PRODUCTION_SETUP.md)**
 
 ## 🚀 Features
 
 ### Frontend (Vue 3 + Composition API)
 - **Dynamic Form Rendering**: Supports multiple field types (text, email, phone, select, checkbox, file upload, textarea)
+- **File Upload Support**: Secure file upload with validation and preview
 - **Responsive Design**: Built with Tailwind CSS for modern, mobile-first design
 - **State Management**: Pinia store for efficient state management
 - **Form Builder**: Intuitive admin interface for creating and managing forms
@@ -22,6 +25,7 @@ A modern, full-stack form builder application built with Vue 3, featuring dynami
 
 ### Integrations
 - **Google Sheets**: Form submissions automatically logged to spreadsheets
+- **File Storage**: Secure local file storage with admin access
 - **Cross-platform**: Works on Windows, macOS, and Linux
 
 ## 🔧 Available Scripts
@@ -86,6 +90,9 @@ ADMIN_PASSWORD=your-secure-password
 # Google API Configuration
 GOOGLE_APPLICATION_CREDENTIALS=./backend/service-account-key.json
 GOOGLE_SHEETS_ID=your-google-sheets-id
+
+# Base URL Configuration
+BASE_URL=http://localhost:3000
 ```
 
 ### 3. Database Setup

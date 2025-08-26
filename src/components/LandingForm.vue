@@ -105,13 +105,20 @@
               {{ field.label }}
               <span v-if="field.required" class="text-red-500">*</span>
             </label>
-            <input
-              :id="field.id"
-              type="file"
-              @change="handleFileChange"
-              :required="field.required"
-              class="form-input h-[50px]"
-            />
+            <div class="space-y-2">
+              <input
+                :id="field.id"
+                type="file"
+                @change="handleFileChange"
+                :required="field.required"
+                class="form-input h-[50px]"
+                :accept="getFileAcceptTypes()"
+              />
+              <div v-if="selectedFile" class="text-sm text-gray-600">
+                <span class="font-medium">Вибрано:</span> {{ selectedFile.name }}
+                <span class="text-gray-500">({{ formatFileSize(selectedFile.size) }})</span>
+              </div>
+            </div>
           </div>
 
           <!-- Textarea Input -->
@@ -224,6 +231,20 @@ const handleFileChange = (event: Event) => {
   if (target.files && target.files[0]) {
     selectedFile.value = target.files[0]
   }
+}
+
+// Get file accept types for input
+const getFileAcceptTypes = () => {
+  return '.jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.xls,.xlsx,.txt,.csv'
+}
+
+// Format file size for display
+const formatFileSize = (bytes: number) => {
+  if (bytes === 0) return '0 Bytes'
+  const k = 1024
+  const sizes = ['Bytes', 'KB', 'MB', 'GB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }
 
 // Handle form submission
