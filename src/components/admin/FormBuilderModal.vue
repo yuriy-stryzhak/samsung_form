@@ -123,6 +123,15 @@
                                 />
                                 <span class="ml-2 text-sm text-gray-700">Обов'язкове</span>
                               </label>
+                              
+                              <label class="flex items-center">
+                                <input
+                                  v-model="field.hasInfo"
+                                  type="checkbox"
+                                  class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                                />
+                                <span class="ml-2 text-sm text-gray-700">Показати іконку інформації</span>
+                              </label>
                 </div>
 
                 <div class="flex items-center space-x-2">
@@ -236,7 +245,8 @@ onMounted(() => {
       name: props.form.name,
       fields: props.form.fields.map(field => ({
         ...field,
-        optionsText: field.options ? field.options.join(', ') : ''
+        optionsText: field.options ? field.options.join(', ') : '',
+        hasInfo: field.hasInfo || false
       })),
       is_active: props.form.is_active
     }
@@ -259,7 +269,8 @@ const addField = () => {
     placeholder: '',
     order: formData.value.fields.length,
     options: [],
-    optionsText: ''
+    optionsText: '',
+    hasInfo: false
   }
   formData.value.fields.push(newField)
 }

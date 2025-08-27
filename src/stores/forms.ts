@@ -10,6 +10,7 @@ export interface FormField {
   placeholder?: string
   options?: string[] // For select fields
   order: number
+  hasInfo?: boolean // Show info icon
 }
 
 export interface Form {
