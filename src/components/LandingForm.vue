@@ -336,7 +336,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useFormsStore } from '@/stores/forms'
-import type { Form, FormField } from '@/stores/forms'
+import type { Form } from '@/stores/forms'
 
 interface Props {
   form: Form

@@ -219,7 +219,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import type { Form, FormField } from '@/stores/forms'
 
 interface Props {
@@ -248,7 +248,7 @@ onMounted(() => {
         optionsText: field.options ? field.options.join(', ') : '',
         hasInfo: field.hasInfo || false
       })),
-      is_active: props.form.is_active
+      is_active: Boolean(props.form.is_active)
     }
   } else {
     formData.value = {
