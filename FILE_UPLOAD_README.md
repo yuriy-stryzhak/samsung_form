@@ -1,65 +1,65 @@
-# Функционал загрузки файлов
+# File Upload Functionality
 
-## Описание
-Реализован функционал загрузки файлов в формах. При отправке формы, если есть поле с файлом и оно обязательное, файл загружается в папку `uploads/` в корне проекта.
+## Description
+File upload functionality has been implemented in forms. When submitting a form, if there is a file field and it is required, the file is uploaded to the `uploads/` folder in the project root.
 
-## Возможности
+## Features
 
-### Поддерживаемые типы файлов
-- **Изображения**: JPG, JPEG, PNG, GIF, WebP
-- **Документы**: PDF, DOC, DOCX, XLS, XLSX
-- **Текстовые**: TXT, CSV
+### Supported File Types
+- **Images**: JPG, JPEG, PNG, GIF, WebP
+- **Documents**: PDF, DOC, DOCX, XLS, XLSX
+- **Text**: TXT, CSV
 
-### Ограничения
-- Максимальный размер файла: 10MB
-- Файлы сохраняются с уникальными именами для избежания конфликтов
+### Limitations
+- Maximum file size: 10MB
+- Files are saved with unique names to avoid conflicts
 
-## Структура проекта
+## Project Structure
 
 ```
 project/
-├── uploads/           # Папка для загруженных файлов
+├── uploads/           # Folder for uploaded files
 ├── backend/
-│   └── server.js     # Сервер с обработкой файлов
+│   └── server.js     # Server with file processing
 └── src/
     ├── components/
-    │   └── LandingForm.vue  # Форма с загрузкой файлов
+    │   └── LandingForm.vue  # Form with file upload
     └── pages/
-        └── Admin.vue        # Админка с просмотром файлов
+        └── Admin.vue        # Admin panel with file viewing
 ```
 
-## Как это работает
+## How It Works
 
-### 1. Загрузка файла
-- Пользователь выбирает файл в поле формы
-- Файл валидируется на тип и размер
-- При отправке формы файл загружается в папку `uploads/`
+### 1. File Upload
+- User selects a file in the form field
+- File is validated for type and size
+- When submitting the form, the file is uploaded to the `uploads/` folder
 
-### 2. Сохранение в базе данных
-- В таблице `submissions` сохраняется ссылка на файл в поле `file_link`
-- Ссылка имеет формат: `http://домен/uploads/имя_файла` (полный URL)
+### 2. Database Storage
+- In the `submissions` table, a link to the file is saved in the `file_link` field
+- The link has the format: `http://domain/uploads/filename` (full URL)
 
-### 3. Отправка в Google таблицы
-- В Google таблицу добавляется информация о наличии файла
-- Если файл загружен: "Файл завантажено"
-- Если файл не загружен: "Немає файлу"
-- **Важно**: Каждая заявка записывается в новую строку, начиная с колонки A
+### 3. Google Sheets Integration
+- Information about file presence is added to Google Sheets
+- If file is uploaded: "File uploaded"
+- If file is not uploaded: "No file"
+- **Important**: Each submission is recorded in a new row, starting from column A
 
-### 4. Просмотр в админке
-- Администратор может просматривать все загруженные файлы
-- Ссылки на файлы открываются в новой вкладке
-- Файлы доступны по прямым ссылкам
-- **Новое**: Ссылки в Google таблицах теперь кликабельны и ведут прямо к файлам
+### 4. Admin Panel Viewing
+- Administrator can view all uploaded files
+- File links open in a new tab
+- Files are accessible via direct links
+- **New**: Links in Google Sheets are now clickable and lead directly to files
 
 ## API Endpoints
 
 ### POST /api/submissions
-Загружает форму с файлом:
+Uploads a form with a file:
 ```javascript
 const formData = new FormData()
 formData.append('form_id', formId)
 formData.append('data', JSON.stringify(data))
-formData.append('file', file) // Опционально
+formData.append('file', file) // Optional
 
 const response = await axios.post('/api/submissions', formData, {
   headers: {
@@ -69,40 +69,40 @@ const response = await axios.post('/api/submissions', formData, {
 ```
 
 ### GET /uploads/:filename
-Статический доступ к загруженным файлам.
+Static access to uploaded files.
 
-## Безопасность
+## Security
 
-- Файлы сохраняются с уникальными именами
-- Валидация типов файлов на сервере
-- Ограничение размера файлов
-- Папка `uploads/` добавлена в `.gitignore`
+- Files are saved with unique names
+- File type validation on the server
+- File size limitation
+- The `uploads/` folder is added to `.gitignore`
 
-## Настройка
+## Configuration
 
-### Создание поля для файла в форме
-В админке при создании формы выберите тип поля "file":
+### Creating a File Field in a Form
+In the admin panel when creating a form, select the field type "file":
 
 ```json
 {
   "id": "document",
   "type": "file",
-  "label": "Завантажити документ",
+  "label": "Upload Document",
   "required": true,
   "order": 1
 }
 ```
 
-### Переменные окружения
-Убедитесь, что в `.env` файле настроены:
-- `GOOGLE_SHEETS_ID` - ID Google таблицы
-- `GOOGLE_APPLICATION_CREDENTIALS` - путь к файлу с Google API ключами
-- `BASE_URL` - базовый URL вашего сайта (например, `http://localhost:3000` для разработки)
+### Environment Variables
+Make sure the following are configured in the `.env` file:
+- `GOOGLE_SHEETS_ID` - Google Sheets ID
+- `GOOGLE_APPLICATION_CREDENTIALS` - path to Google API keys file
+- `BASE_URL` - base URL of your website (e.g., `http://localhost:3000` for development)
 
-## Мониторинг
+## Monitoring
 
-### Логи сервера
-Сервер логирует все операции с файлами:
+### Server Logs
+The server logs all file operations:
 ```
 📝 New submission received
 📋 Form ID: 1
@@ -112,24 +112,24 @@ const response = await axios.post('/api/submissions', formData, {
 ✅ Data saved to Google Sheets successfully
 ```
 
-### Проверка загрузки
-- Файлы сохраняются в папке `uploads/`
-- В базе данных создаются записи с `file_link`
-- В Google таблице отображается статус файла
+### Upload Verification
+- Files are saved in the `uploads/` folder
+- Records with `file_link` are created in the database
+- File status is displayed in Google Sheets
 
-## Устранение неполадок
+## Troubleshooting
 
-### Файл не загружается
-1. Проверьте размер файла (максимум 10MB)
-2. Убедитесь, что тип файла поддерживается
-3. Проверьте права доступа к папке `uploads/`
+### File Not Uploading
+1. Check file size (maximum 10MB)
+2. Ensure the file type is supported
+3. Check access permissions to the `uploads/` folder
 
-### Файл не отображается в админке
-1. Проверьте, что файл физически существует в папке `uploads/`
-2. Убедитесь, что в базе данных правильно сохранен `file_link`
-3. Проверьте, что сервер запущен и доступен
+### File Not Displaying in Admin Panel
+1. Check that the file physically exists in the `uploads/` folder
+2. Ensure that `file_link` is properly saved in the database
+3. Check that the server is running and accessible
 
-### Ошибки в Google таблицах
-1. Проверьте настройки Google API
-2. Убедитесь, что таблица существует и доступна
-3. Проверьте права доступа к таблице
+### Google Sheets Errors
+1. Check Google API settings
+2. Ensure the spreadsheet exists and is accessible
+3. Check access permissions to the spreadsheet

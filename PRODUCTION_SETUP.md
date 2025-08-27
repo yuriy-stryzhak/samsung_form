@@ -1,18 +1,18 @@
-# Настройка для продакшена
+# Production Setup
 
-## Переменные окружения для продакшена
+## Environment Variables for Production
 
-### Обязательные переменные
+### Required Variables
 
 ```env
 # Server Configuration
 PORT=5000
 NODE_ENV=production
 
-# Base URL Configuration - ВАЖНО для продакшена!
+# Base URL Configuration - IMPORTANT for production!
 BASE_URL=https://yourdomain.com
 
-# JWT Configuration - Обязательно измените в продакшені!
+# JWT Configuration - Must change in production!
 JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 
 # Database Configuration
@@ -27,35 +27,35 @@ GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json
 GOOGLE_SHEETS_ID=your-google-sheets-id
 ```
 
-## Ключевые моменты для продакшена
+## Key Points for Production
 
 ### 1. BASE_URL
-**ВАЖНО**: Установите правильный домен для вашего сайта:
+**IMPORTANT**: Set the correct domain for your website:
 ```env
-# Для продакшена
+# For production
 BASE_URL=https://yourdomain.com
 
-# НЕ используйте localhost в продакшені!
-# BASE_URL=http://localhost:3000  # ❌ НЕПРАВИЛЬНО
+# DO NOT use localhost in production!
+# BASE_URL=http://localhost:3000  # ❌ INCORRECT
 ```
 
-### 2. Безопасность
-- Измените `JWT_SECRET` на уникальный, сложный ключ
-- Используйте HTTPS в продакшені
-- Настройте правильные CORS налаштування
-- Ограничьте доступ к папці `uploads/` только через API
+### 2. Security
+- Change `JWT_SECRET` to a unique, complex key
+- Use HTTPS in production
+- Configure proper CORS settings
+- Restrict access to `uploads/` folder only through API
 
-### 3. Файлы
-- Папка `uploads/` должна быть доступна для записи веб-сервером
-- Настройте правильные права доступа
-- Рассмотрите использование CDN для статических файлов
+### 3. Files
+- The `uploads/` folder must be writable by the web server
+- Set proper access permissions
+- Consider using CDN for static files
 
-### 4. База данных
-- Используйте абсолютный путь к базе данных
-- Убедитесь, что веб-сервер имеет права на запись
-- Регулярно делайте резервные копии
+### 4. Database
+- Use absolute path to the database
+- Ensure the web server has write permissions
+- Make regular backups
 
-## Примеры настройки для разных хостингов
+## Setup Examples for Different Hostings
 
 ### Heroku
 ```env
@@ -76,39 +76,39 @@ BASE_URL=https://your-app-name.ondigitalocean.app
 ### AWS EC2
 ```env
 BASE_URL=https://yourdomain.com
-# или
+# or
 BASE_URL=http://your-ip-address
 ```
 
-## Проверка настройки
+## Setup Verification
 
-После настройки проверьте:
+After setup, verify:
 
-1. **Файлы загружаются**: Отправьте форму с файлом
-2. **URL в базе данных**: Проверьте, что `file_link` содержит полный домен
-3. **Google таблица**: Убедитесь, что ссылки кликабельны
-4. **Доступ к файлам**: Откройте ссылку на файл в новой вкладке
+1. **Files upload**: Submit a form with a file
+2. **URL in database**: Check that `file_link` contains the full domain
+3. **Google spreadsheet**: Ensure links are clickable
+4. **File access**: Open the file link in a new tab
 
-## Логи для отладки
+## Debug Logs
 
-Сервер логирует создание URL файлов:
+The server logs file URL creation:
 ```
 📁 File uploaded successfully: document-1234567890-123456789.pdf
 🔗 File link created: https://yourdomain.com/uploads/document-1234567890-123456789.pdf
 ```
 
-## Устранение проблем
+## Troubleshooting
 
-### Файлы не открываются
-1. Проверьте `BASE_URL` в `.env`
-2. Убедитесь, что папка `uploads/` доступна
-3. Проверьте права доступа веб-сервера
+### Files don't open
+1. Check `BASE_URL` in `.env`
+2. Ensure the `uploads/` folder is accessible
+3. Check web server access permissions
 
-### Неправильные URL в Google таблице
-1. Перезапустите сервер после изменения `BASE_URL`
-2. Проверьте логи сервера
-3. Убедитесь, что переменная окружения загружается правильно
+### Incorrect URLs in Google spreadsheet
+1. Restart the server after changing `BASE_URL`
+2. Check server logs
+3. Ensure the environment variable loads correctly
 
-### Ошибки CORS
-1. Настройте правильные CORS налаштування для вашего домена
-2. Убедитесь, что frontend и backend используют одинаковый домен
+### CORS errors
+1. Configure proper CORS settings for your domain
+2. Ensure frontend and backend use the same domain

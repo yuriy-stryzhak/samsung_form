@@ -217,7 +217,7 @@ onMounted(() => {
     if (field.type === 'checkbox') {
       formData.value[field.id] = false
     } else if (field.type === 'select') {
-      // Для select полей устанавливаем пустое значение, чтобы показать плейсхолдер
+      // For select fields, set empty value to show placeholder
       formData.value[field.id] = ''
     } else {
       formData.value[field.id] = ''
@@ -295,7 +295,7 @@ const handleSubmit = async () => {
         if (field.type === 'checkbox') {
           formData.value[field.id] = false
         } else if (field.type === 'select') {
-          // Для select полей сбрасываем к пустому значению, чтобы показать плейсхолдер
+          // For select fields, reset to empty value to show placeholder
           formData.value[field.id] = ''
         } else {
           formData.value[field.id] = ''
