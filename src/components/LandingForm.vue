@@ -1,6 +1,6 @@
 <template>
   <div class="card-modern">
-    <form @submit.prevent="handleSubmit" class="space-y-6">
+         <form @submit.prevent="handleSubmit" class="space-y-6" novalidate>
       <!-- Dynamic Fields -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                  <div 
@@ -11,109 +11,130 @@
              field.type === 'textarea' || field.type === 'checkbox' ? 'md:col-span-2' : ''
            ]"
          >
-          <!-- Text Input -->
-          <div v-if="field.type === 'text'">
-            <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
-              {{ field.label }}
-              <span v-if="field.required" class="text-red-500">*</span>
-              <button 
-                v-if="field.hasInfo" 
-                type="button"
-                @click="showInfo(field.id)"
-                class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
-                title="Показати приклад"
-              >
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                </svg>
-              </button>
-            </label>
-            <input
-              :id="field.id"
-              v-model="formData[field.id]"
-              type="text"
-              :placeholder="field.placeholder"
-              :required="field.required"
-              class="form-input h-[50px]"
-            />
-          </div>
+                                <!-- Text Input -->
+           <div v-if="field.type === 'text'">
+             <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
+               {{ field.label }}
+               <span v-if="field.required" class="text-red-500">*</span>
+               <button 
+                 v-if="field.hasInfo" 
+                 type="button"
+                 @click="showInfo(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
+                 title="Показати приклад"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
+             </label>
+             <input
+               :id="field.id"
+               v-model="formData[field.id]"
+               type="text"
+               :placeholder="field.placeholder"
+               :class="[
+                 'form-input h-[50px]',
+                 validationErrors[field.id] ? 'border-red-500 focus:border-red-500 focus:ring-red-500 bg-red-50' : ''
+               ]"
+               @input="clearValidationError(field.id)"
+             />
+              <div v-if="validationErrors[field.id]" class="mt-1 text-xs text-red-600 animate-pulse">
+                {{ validationErrors[field.id] }}
+              </div>
+            </div>
 
-          <!-- Email Input -->
-          <div v-else-if="field.type === 'email'">
-            <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
-              {{ field.label }}
-              <span v-if="field.required" class="text-red-500">*</span>
-              <button 
-                v-if="field.hasInfo" 
-                type="button"
-                @click="showInfo(field.id)"
-                class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
-                title="Показати приклад"
-              >
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                </svg>
-              </button>
-            </label>
-            <input
-              :id="field.id"
-              v-model="formData[field.id]"
-              type="email"
-              :placeholder="field.placeholder"
-              :required="field.required"
-              class="form-input h-[50px]"
-            />
-          </div>
+                                <!-- Email Input -->
+           <div v-else-if="field.type === 'email'">
+             <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
+               {{ field.label }}
+               <span v-if="field.required" class="text-red-500">*</span>
+               <button 
+                 v-if="field.hasInfo" 
+                 type="button"
+                 @click="showInfo(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
+                 title="Показати приклад"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
+             </label>
+             <input
+               :id="field.id"
+               v-model="formData[field.id]"
+               type="email"
+               :placeholder="field.placeholder"
+               :class="[
+                 'form-input h-[50px]',
+                 validationErrors[field.id] ? 'border-red-500 focus:border-red-500 focus:ring-red-500 bg-red-50' : ''
+               ]"
+               @input="clearValidationError(field.id)"
+             />
+              <div v-if="validationErrors[field.id]" class="mt-1 text-xs text-red-600 animate-pulse">
+                {{ validationErrors[field.id] }}
+              </div>
+            </div>
 
-          <!-- Phone Input -->
-          <div v-else-if="field.type === 'phone'">
-            <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
-              {{ field.label }}
-              <span v-if="field.required" class="text-red-500">*</span>
-              <button 
-                v-if="field.hasInfo" 
-                type="button"
-                @click="showInfo(field.id)"
-                class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
-                title="Показати приклад"
-              >
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                </svg>
-              </button>
-            </label>
-            <input
-              :id="field.id"
-              v-model="formData[field.id]"
-              type="tel"
-              :placeholder="field.placeholder"
-              :required="field.required"
-              class="form-input h-[50px]"
-            />
-          </div>
+                                <!-- Phone Input -->
+           <div v-else-if="field.type === 'phone'">
+             <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
+               {{ field.label }}
+               <span v-if="field.required" class="text-red-500">*</span>
+               <button 
+                 v-if="field.hasInfo" 
+                 type="button"
+                 @click="showInfo(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
+                 title="Показати приклад"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
+             </label>
+             <input
+               :id="field.id"
+               v-model="formData[field.id]"
+               type="tel"
+               :placeholder="field.placeholder"
+               :class="[
+                 'form-input h-[50px]',
+                 validationErrors[field.id] ? 'border-red-500 focus:border-red-500 focus:ring-red-500 bg-red-50' : ''
+               ]"
+               @input="clearValidationError(field.id)"
+             />
+              <div v-if="validationErrors[field.id]" class="mt-1 text-xs text-red-600 animate-pulse">
+                {{ validationErrors[field.id] }}
+              </div>
+            </div>
 
-          <!-- Select Input -->
-          <div v-else-if="field.type === 'select'">
-            <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
-              {{ field.label }}
-              <span v-if="field.required" class="text-red-500">*</span>
-              <button 
-                v-if="field.hasInfo" 
-                type="button"
-                @click="showInfo(field.id)"
-                class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
-                title="Показати приклад"
-              >
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                </svg>
-              </button>
-            </label>
+                     <!-- Select Input -->
+           <div v-else-if="field.type === 'select'">
+             <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
+               {{ field.label }}
+               <span v-if="field.required" class="text-red-500">*</span>
+               <button 
+                 v-if="field.hasInfo" 
+                 type="button"
+                 @click="showInfo(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
+                 title="Показати приклад"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
+             </label>
                          <select
                :id="field.id"
                v-model="formData[field.id]"
-               :required="field.required"
-               class="form-select h-[50px]"
+               :class="[
+                 'form-select h-[50px]',
+                 validationErrors[field.id] ? 'border-red-500 focus:border-red-500 focus:ring-red-500 bg-red-50' : ''
+               ]"
+               @change="clearValidationError(field.id)"
              >
                <option value="" disabled>{{ field.placeholder || 'Оберіть опцію' }}</option>
                <option 
@@ -124,18 +145,24 @@
                  {{ option }}
                </option>
              </select>
+            <div v-if="validationErrors[field.id]" class="mt-1 text-xs text-red-600 animate-pulse">
+              {{ validationErrors[field.id] }}
+            </div>
           </div>
 
           <!-- Checkbox Input -->
           <div v-else-if="field.type === 'checkbox'">
             <div class="flex items-center">
-              <input
-                :id="field.id"
-                v-model="formData[field.id]"
-                type="checkbox"
-                :required="field.required"
-                class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded shrink-0"
-              />
+                             <input
+                 :id="field.id"
+                 v-model="formData[field.id]"
+                 type="checkbox"
+                 :class="[
+                   'h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded shrink-0',
+                   validationErrors[field.id] ? 'border-red-500 focus:ring-red-500' : ''
+                 ]"
+                 @change="clearValidationError(field.id)"
+               />
               <label :for="field.id" class="ml-2 block text-sm text-gray-700">
                 {{ field.label }}
                 <span v-if="field.required" class="text-red-500">*</span>
@@ -152,67 +179,81 @@
                 </button>
               </label>
             </div>
+                                                   <div v-if="validationErrors[field.id]" class="mt-1 ml-6 text-xs text-red-600 animate-pulse">
+                {{ validationErrors[field.id] }}
+              </div>
           </div>
 
-          <!-- File Upload -->
-          <div v-else-if="field.type === 'file'">
-            <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
-              {{ field.label }}
-              <span v-if="field.required" class="text-red-500">*</span>
-              <button 
-                v-if="field.hasInfo" 
-                type="button"
-                @click="showInfo(field.id)"
-                class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
-                title="Показати приклад"
-              >
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                </svg>
-              </button>
-            </label>
-            <div class="space-y-2">
-              <input
-                :id="field.id"
-                type="file"
-                @change="handleFileChange"
-                :required="field.required"
-                class="form-input h-[50px]"
-                :accept="getFileAcceptTypes()"
-              />
-              <div v-if="selectedFile" class="text-sm text-gray-600">
-                <span class="font-medium">Вибрано:</span> {{ selectedFile.name }}
-                <span class="text-gray-500">({{ formatFileSize(selectedFile.size) }})</span>
+                     <!-- File Upload -->
+           <div v-else-if="field.type === 'file'">
+             <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
+               {{ field.label }}
+               <span v-if="field.required" class="text-red-500">*</span>
+               <button 
+                 v-if="field.hasInfo" 
+                 type="button"
+                 @click="showInfo(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
+                 title="Показати приклад"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
+             </label>
+             <div class="space-y-2">
+               <input
+                 :id="field.id"
+                 type="file"
+                 @change="handleFileChange"
+                 :class="[
+                   'form-input h-[50px]',
+                   validationErrors[field.id] ? 'border-red-500 focus:border-red-500 focus:ring-red-500 bg-red-50' : ''
+                 ]"
+                 :accept="getFileAcceptTypes()"
+               />
+               <div v-if="selectedFile" class="text-sm text-gray-600">
+                 <span class="font-medium">Вибрано:</span> {{ selectedFile.name }}
+                 <span class="text-red-500">({{ formatFileSize(selectedFile.size) }})</span>
+               </div>
+             </div>
+                         <div v-if="validationErrors[field.id]" class="mt-1 text-xs text-red-600 animate-pulse">
+               {{ validationErrors[field.id] }}
+             </div>
+          </div>
+
+                     <!-- Textarea Input -->
+           <div v-else-if="field.type === 'textarea'">
+             <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
+               {{ field.label }}
+               <span v-if="field.required" class="text-red-500">*</span>
+               <button 
+                 v-if="field.hasInfo" 
+                 type="button"
+                 @click="showInfo(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
+                 title="Показати приклад"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
+             </label>
+             <textarea
+               :id="field.id"
+               v-model="formData[field.id]"
+               :placeholder="field.placeholder"
+               rows="4"
+               :class="[
+                 'form-input',
+                 validationErrors[field.id] ? 'border-red-500 focus:border-red-500 focus:ring-red-500 bg-red-50' : ''
+               ]"
+               @input="clearValidationError(field.id)"
+             ></textarea>
+              <div v-if="validationErrors[field.id]" class="mt-1 text-xs text-red-600 animate-pulse">
+                {{ validationErrors[field.id] }}
               </div>
             </div>
-          </div>
-
-          <!-- Textarea Input -->
-          <div v-else-if="field.type === 'textarea'">
-            <label :for="field.id" class="flex items-center text-sm font-medium text-gray-700 mb-2">
-              {{ field.label }}
-              <span v-if="field.required" class="text-red-500">*</span>
-              <button 
-                v-if="field.hasInfo" 
-                type="button"
-                @click="showInfo(field.id)"
-                class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
-                title="Показати приклад"
-              >
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                </svg>
-              </button>
-            </label>
-            <textarea
-              :id="field.id"
-              v-model="formData[field.id]"
-              :placeholder="field.placeholder"
-              :required="field.required"
-              rows="4"
-              class="form-input"
-            ></textarea>
-          </div>
         </div>
       </div>
 
@@ -310,6 +351,7 @@ const loading = ref(false)
 const showSuccess = ref(false)
 const showInfoPopup = ref(false)
 const currentInfoField = ref<string | null>(null)
+const validationErrors = ref<Record<string, string>>({})
 
 // Sort fields by order
 const sortedFields = computed(() => {
@@ -340,6 +382,11 @@ const handleFileChange = (event: Event) => {
   const target = event.target as HTMLInputElement
   if (target.files && target.files[0]) {
     selectedFile.value = target.files[0]
+    // Clear validation error for file field
+    const fieldId = target.id
+    if (validationErrors.value[fieldId]) {
+      clearValidationError(fieldId)
+    }
   }
 }
 
@@ -395,16 +442,66 @@ const closeSuccessModal = () => {
     }
   })
   
+  // Clear validation errors
+  validationErrors.value = {}
+  
   // Close info popup if open
   if (showInfoPopup.value) {
     closeInfoPopup()
   }
 }
 
+// Validate form fields
+const validateForm = () => {
+  validationErrors.value = {}
+  let isValid = true
+  
+  props.form.fields.forEach(field => {
+    if (field.required) {
+      const value = formData.value[field.id]
+      
+      if (field.type === 'checkbox') {
+        if (!value) {
+          validationErrors.value[field.id] = 'Поле є обов\'язковим'
+          isValid = false
+        }
+      } else if (field.type === 'file') {
+        if (!selectedFile.value) {
+          validationErrors.value[field.id] = 'Поле є обов\'язковим'
+          isValid = false
+        }
+      } else {
+        if (!value || value.trim() === '') {
+          validationErrors.value[field.id] = 'Поле є обов\'язковим'
+          isValid = false
+        }
+      }
+    }
+  })
+  
+  return isValid
+}
+
+// Clear validation error for specific field
+const clearValidationError = (fieldId: string) => {
+  if (validationErrors.value[fieldId]) {
+    delete validationErrors.value[fieldId]
+  }
+}
 
 
 // Handle form submission
 const handleSubmit = async () => {
+  // Clear previous validation errors
+  validationErrors.value = {}
+  
+  // Validate form before submission
+  if (!validateForm()) {
+    // Small delay to make validation errors more visible
+    await new Promise(resolve => setTimeout(resolve, 100))
+    return
+  }
+  
   try {
     loading.value = true
     
@@ -454,6 +551,9 @@ const handleSubmit = async () => {
       if (showInfoPopup.value) {
         closeInfoPopup()
       }
+      
+      // Clear validation errors on success
+      validationErrors.value = {}
     } else {
       alert('Помилка відправлення форми: ' + result.error)
     }
