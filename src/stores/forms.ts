@@ -11,6 +11,7 @@ export interface FormField {
   options?: string[] // For select fields
   order: number
   hasInfo?: boolean // Show info icon
+  hasInfo2?: boolean // Show second info icon
 }
 
 export interface Form {

@@ -113,8 +113,8 @@
                           </div>
 
               <!-- Field Settings -->
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
+              <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
                                                 <label class="flex items-center">
                                 <input
                                   v-model="field.required"
@@ -132,9 +132,18 @@
                                 />
                                 <span class="ml-2 text-sm text-gray-700">Показати іконку інформації</span>
                               </label>
+                              
+                              <label class="flex items-center">
+                                <input
+                                  v-model="field.hasInfo2"
+                                  type="checkbox"
+                                  class="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                                />
+                                <span class="ml-2 text-sm text-gray-700">Показати іконку інформації 2</span>
+                              </label>
                 </div>
 
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center justify-center lg:justify-end space-x-2">
                                      <button 
                      type="button"
                      @click="moveField(index, -1)"
@@ -246,7 +255,8 @@ onMounted(() => {
       fields: props.form.fields.map(field => ({
         ...field,
         optionsText: field.options ? field.options.join(', ') : '',
-        hasInfo: field.hasInfo || false
+        hasInfo: field.hasInfo || false,
+        hasInfo2: field.hasInfo2 || false
       })),
       is_active: Boolean(props.form.is_active)
     }
@@ -270,7 +280,8 @@ const addField = () => {
     order: formData.value.fields.length,
     options: [],
     optionsText: '',
-    hasInfo: false
+    hasInfo: false,
+    hasInfo2: false
   }
   formData.value.fields.push(newField)
 }

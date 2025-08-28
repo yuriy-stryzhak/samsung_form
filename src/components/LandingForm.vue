@@ -27,6 +27,18 @@
                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
                  </svg>
                </button>
+               
+               <button 
+                 v-if="field.hasInfo2" 
+                 type="button"
+                 @click="showInfo2(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-green-500 hover:text-green-700 transition-colors"
+                 title="Показати приклад 2"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
              </label>
              <input
                :id="field.id"
@@ -55,6 +67,18 @@
                  @click="showInfo(field.id)"
                  class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
                  title="Показати приклад"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
+               
+               <button 
+                 v-if="field.hasInfo2" 
+                 type="button"
+                 @click="showInfo2(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-green-500 hover:text-green-700 transition-colors"
+                 title="Показати приклад 2"
                >
                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
@@ -93,6 +117,18 @@
                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
                  </svg>
                </button>
+               
+               <button 
+                 v-if="field.hasInfo2" 
+                 type="button"
+                 @click="showInfo2(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-green-500 hover:text-green-700 transition-colors"
+                 title="Показати приклад 2"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
              </label>
              <input
                :id="field.id"
@@ -121,6 +157,18 @@
                  @click="showInfo(field.id)"
                  class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
                  title="Показати приклад"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
+               
+               <button 
+                 v-if="field.hasInfo2" 
+                 type="button"
+                 @click="showInfo2(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-green-500 hover:text-green-700 transition-colors"
+                 title="Показати приклад 2"
                >
                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
@@ -177,6 +225,18 @@
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
                   </svg>
                 </button>
+                
+                <button 
+                  v-if="field.hasInfo2" 
+                  type="button"
+                  @click="showInfo2(field.id)"
+                  class="ml-2 inline-flex items-center justify-center w-5 h-5 text-green-500 hover:text-green-700 transition-colors"
+                  title="Показати приклад 2"
+                >
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                  </svg>
+                </button>
               </label>
             </div>
                                                    <div v-if="validationErrors[field.id]" class="mt-1 ml-6 text-xs text-red-600 animate-pulse">
@@ -195,6 +255,18 @@
                  @click="showInfo(field.id)"
                  class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
                  title="Показати приклад"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
+               
+               <button 
+                 v-if="field.hasInfo2" 
+                 type="button"
+                 @click="showInfo2(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-green-500 hover:text-green-700 transition-colors"
+                 title="Показати приклад 2"
                >
                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
@@ -233,6 +305,18 @@
                  @click="showInfo(field.id)"
                  class="ml-2 inline-flex items-center justify-center w-5 h-5 text-blue-500 hover:text-blue-700 transition-colors"
                  title="Показати приклад"
+               >
+                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                 </svg>
+               </button>
+               
+               <button 
+                 v-if="field.hasInfo2" 
+                 type="button"
+                 @click="showInfo2(field.id)"
+                 class="ml-2 inline-flex items-center justify-center w-5 h-5 text-green-500 hover:text-green-700 transition-colors"
+                 title="Показати приклад 2"
                >
                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
@@ -308,24 +392,50 @@
     <!-- Info Popup -->
     <div 
       v-if="showInfoPopup"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
       @click="closeInfoPopup"
     >
-      <div class="relative max-w-2xl mx-4 animate-scale-in" @click.stop>
+      <div class="relative w-full h-full max-w-none animate-scale-in" @click.stop>
         <button 
           @click="closeInfoPopup"
-          class="absolute -top-4 -right-4 text-white hover:text-gray-200 transition-colors duration-200 z-10 bg-black bg-opacity-5 opacity-70 rounded-full p-2"
+          class="absolute top-4 right-4 text-white hover:text-gray-200 transition-colors duration-200 z-10 bg-black bg-opacity-70 hover:bg-opacity-90 opacity-70 rounded-full p-3"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
         
-        <div class="text-center">
+        <div class="flex items-center justify-center w-full h-full">
           <img 
             src="/example.png" 
             alt="Приклад заповнення поля" 
-            class="max-w-full h-auto rounded-lg mx-auto"
+            class="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Info2 Popup -->
+    <div 
+      v-if="showInfo2Popup"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      @click="closeInfo2Popup"
+    >
+      <div class="relative w-full h-full max-w-none animate-scale-in" @click.stop>
+        <button 
+          @click="closeInfo2Popup"
+          class="absolute top-4 right-4 text-white hover:text-gray-200 transition-colors duration-200 z-10 bg-black bg-opacity-70 hover:bg-opacity-90 opacity-70 rounded-full p-3"
+        >
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+        
+        <div class="flex items-center justify-center w-full h-full">
+          <img 
+            src="/example2.jpg" 
+            alt="Приклад заповнення поля 2" 
+            class="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
           />
         </div>
       </div>
@@ -350,7 +460,9 @@ const selectedFile = ref<File | null>(null)
 const loading = ref(false)
 const showSuccess = ref(false)
 const showInfoPopup = ref(false)
+const showInfo2Popup = ref(false)
 const currentInfoField = ref<string | null>(null)
+const currentInfo2Field = ref<string | null>(null)
 const validationErrors = ref<Record<string, string>>({})
 
 // Sort fields by order
@@ -373,6 +485,11 @@ onMounted(() => {
     // Initialize hasInfo if not present
     if (field.hasInfo === undefined) {
       field.hasInfo = false
+    }
+    
+    // Initialize hasInfo2 if not present
+    if (field.hasInfo2 === undefined) {
+      field.hasInfo2 = false
     }
   })
 })
@@ -416,6 +533,18 @@ const closeInfoPopup = () => {
   currentInfoField.value = null
 }
 
+// Show info2 popup
+const showInfo2 = (fieldId: string) => {
+  currentInfo2Field.value = fieldId
+  showInfo2Popup.value = true
+}
+
+// Close info2 popup
+const closeInfo2Popup = () => {
+  showInfo2Popup.value = false
+  currentInfo2Field.value = null
+}
+
 // Close success modal and reset form completely
 const closeSuccessModal = () => {
   showSuccess.value = false
@@ -448,6 +577,11 @@ const closeSuccessModal = () => {
   // Close info popup if open
   if (showInfoPopup.value) {
     closeInfoPopup()
+  }
+  
+  // Close info2 popup if open
+  if (showInfo2Popup.value) {
+    closeInfo2Popup()
   }
 }
 
@@ -552,6 +686,11 @@ const handleSubmit = async () => {
         closeInfoPopup()
       }
       
+      // Close info2 popup if open
+      if (showInfo2Popup.value) {
+        closeInfo2Popup()
+      }
+      
       // Clear validation errors on success
       validationErrors.value = {}
     } else {
@@ -566,6 +705,11 @@ const handleSubmit = async () => {
     // Close info popup if open
     if (showInfoPopup.value) {
       closeInfoPopup()
+    }
+    
+    // Close info2 popup if open
+    if (showInfo2Popup.value) {
+      closeInfo2Popup()
     }
   }
 }
