@@ -16,8 +16,7 @@ lov-app/
 uploads/
 
 # Google API credentials
-backend/*.json
-!backend/package.json
+backend/credentials.json
 
 # Database
 database.sqlite
